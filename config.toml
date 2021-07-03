@@ -1,0 +1,97 @@
+baseURL = "http://example.org/"
+title = "Tales Tips and Tricks"
+theme = "hugo-coder"
+languageCode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+
+pygmentsstyle = "monokai"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+disableComments = true
+# disqusShortname = "yourdiscussshortname"
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+  author = "authors"
+
+
+[params]
+  author = "Tales L. Aparecida"
+  info = "Software Engineer"
+  description = "Notes about software and personal development"
+  keywords = "blog,developer,personal"
+  gravatar = "tales.aparecida@gmail.com"
+#   avatarurl = "images/avatar.jpg"
+
+#   favicon_32 = "/img/favicon-32x32.png"
+#   favicon_16 = "/img/favicon-16x16.png"
+
+# Footes
+  footercontent = "Notes about software and personal development"
+  hideFooter = false
+  hideCredits = false
+  hideCopyright = false
+  since = 2021
+#   commit = 
+
+  maxSeeAlsoItems = 5
+
+  rtl = false  # Enable the Right To Left mode.
+  enableTwemoji = true  # Adds support for Twemoji
+
+# Light and Dark theme
+  colorScheme = "auto"
+  hidecolorschemetoggle = false
+
+# Custom Style files
+  #customCSS = ["css/custom.css"]
+  #customSCSS = ["scss/custom.scss"]
+  #customJS = ["js/custom.js"]
+
+# Social links
+[[params.social]]
+  name = "Github"
+  icon = "fa fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/tales-aparecida/"
+[[params.social]]
+  name = "Gitlab"
+  icon = "fa fa-gitlab fa-2x"
+  weight = 2
+  url = "https://gitlab.com/thalelinh/"
+[[params.social]]
+  name = "LinkedIn"
+  icon = "fa fa-linkedin fa-2x"
+  weight = 3
+  url = "https://www.linkedin.com/in/tales-aparecida/"
+[[params.social]]
+  name = "E-mail"
+  icon = "fa fa-envelope fa-2x"
+  weight = 4
+  url = "mailto:tales.aparecida@gmail.com"
+
+
+
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url  = "posts/"
+[[menu.main]]
+  name = "Categories"
+  weight = 2
+  url = "categories/"
+[[menu.main]]
+  name = "Tags"
+  weight = 3
+  url = "tags/"
+[[menu.main]]
+  name = "About"
+  weight = 4
+  url = "about/"
+
+[languages]
