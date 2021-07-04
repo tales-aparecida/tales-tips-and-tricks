@@ -8,7 +8,7 @@ _Notes about software and personal development_
 
 
 Read how to build your own Hugo website at
-https://tales-tips-and-tricks.github.io/posts/how-to-hugo.
+https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo.
 
 ---
 ## License
