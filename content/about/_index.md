@@ -9,7 +9,7 @@ featuredImage = "https://en.gravatar.com/userimage/23950340/6a9da95b77d4e6d6e97b
 This is my journal, where I organize some tips and tricks that help me
 throughout my days.
 
-You can call me **Tales** _(he, him)_ and I'm currently working as a tech lead at [NeuralMind](neuralmind.ai).
+You can call me **Tales** _(he, him)_ and I'm currently working as a tech lead at [NeuralMind](https://neuralmind.ai).
 
 # Contact
 
