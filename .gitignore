@@ -1,4 +1,7 @@
+# Build files
 public/*
 resources/*
+.hugo_build.lock
 
+# Editor configs
 .vscode
