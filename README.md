@@ -10,6 +10,13 @@ _Notes about software and personal development_
 Read how to build your own Hugo website at
 https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo.
 
+Otherwise, if you just want to create a new post, [install Hugo](https://gohugo.io/getting-started/installing/) and run: `hugo new posts/NEW-POST-NAME.md`. Then edit the new file and check your workings with `hugo server`. Finally, open a Merge Request with your changes! :D
+
+Note that you may want to use the following flags when running the server:
+
+* `-D`, `--buildDrafts` include content marked as `draft`.
+* `-F`, `--buildFuture` include content with `publishdate`/`date` in the future.
+
 ---
 ## License
 
