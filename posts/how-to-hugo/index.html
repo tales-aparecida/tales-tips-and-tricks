@@ -21,16 +21,15 @@ How to setup your own website powered by Hugo · Tales Tips and Tricks
 </title>
 <link rel=canonical href=https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/>
 <link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin>
-<link rel=stylesheet href=/tales-tips-and-tricks/css/coder.min.34dfa7b2f5cdeb0f5302b2628f4a7a4bfe88a2431e1397ee4ec605c56ab69701.css integrity="sha256-NN+nsvXN6w9TArJij0p6S/6IokMeE5fuTsYFxWq2lwE=" crossorigin=anonymous media=screen>
-<link rel=stylesheet href=/tales-tips-and-tricks/css/coder-dark.min.d8f89ef09509afb63b9b2595ee174e53cc51ce02a6f6a2179e1621f9389e4340.css integrity="sha256-2Pie8JUJr7Y7myWV7hdOU8xRzgKm9qIXnhYh+TieQ0A=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=/tales-tips-and-tricks/css/coder.min.d9fddbffe6f27e69985dc5fe0471cdb0e57fbf4775714bc3d847accb08f4a1f6.css integrity="sha256-2f3b/+byfmmYXcX+BHHNsOV/v0d1cUvD2Eesywj0ofY=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=/tales-tips-and-tricks/css/coder-dark.min.002ee2378e14c7a68f1f0a53d9694ed252090987c4e768023fac694a4fc5f793.css integrity="sha256-AC7iN44Ux6aPHwpT2WlO0lIJCYfE52gCP6xpSk/F95M=" crossorigin=anonymous media=screen>
 <link rel=icon type=image/png href=/tales-tips-and-tricks/images/favicon-32x32.png sizes=32x32>
 <link rel=icon type=image/png href=/tales-tips-and-tricks/images/favicon-16x16.png sizes=16x16>
 <link rel=apple-touch-icon href=/tales-tips-and-tricks/images/apple-touch-icon.png>
 <link rel=apple-touch-icon sizes=180x180 href=/tales-tips-and-tricks/images/apple-touch-icon.png>
-<script defer src=https://twemoji.maxcdn.com/v/13.0.2/twemoji.min.js integrity=sha384-wyB/MspSJ/r2bT2kCj44qtsYRYlpzO2oAPhRj5myrWD63dt6qWv4x8AZe7Fl3K3b crossorigin=anonymous></script>
 <meta name=generator content="Hugo 0.91.2">
 </head>
-<body class="preload-transitions colorscheme-auto" onload=twemoji.parse(document.body)>
+<body class="preload-transitions colorscheme-auto">
 <div class=float-container>
 <a id=dark-mode-toggle class=colorscheme-toggle>
 <i class="fa fa-adjust fa-fw" aria-hidden=true></i>
@@ -190,6 +189,35 @@ Publish
 <p><img src=/tales-tips-and-tricks/images/gh-pages.png alt="Activate GitHub Page in the repo settings"></p>
 <p>Then, create a <code>.github/workflows/gh-pages.yml</code> in your main branch to setup the GitHub Actions pipeline, which will build the statics into the <code>gh-pages</code> branch, you can copy my <a href=https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/.github/workflows/gh-pages.yml><code>gh-pages.yml</code></a> if you want to, which I got from <a href=https://github.com/peaceiris/actions-hugo>https://github.com/peaceiris/actions-hugo</a>.</p>
 <p>That&rsquo;s it, in your next <code>git push</code> you will trigger the deploy and your website will be accessible through the URL informed while activating the GitHub Pages. :D</p>
+<h2 id=userorganization-page-vs-repository-page>
+User/Organization page vs Repository page
+<a class=heading-link href=#userorganization-page-vs-repository-page>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h2>
+<p>You&rsquo;ll notice that the URL hosting your website looks something like: <code>https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/</code>.
+To fix that, either rename your repository to <code>YOUR-USERNAME.github.io</code> or create a repository with that name with a page responsible for redirecting into the correct path.
+In that case, you just need to activate the GitHub Pages in the new repo and add the file <code>index.html</code>:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=color:#75715e>&lt;!DOCTYPE html&gt;</span>
+&lt;<span style=color:#f92672>html</span>&gt;
+&lt;<span style=color:#f92672>head</span>&gt;
+    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>charset</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;utf-8&#34;</span>/&gt;
+    &lt;<span style=color:#f92672>title</span>&gt;Redirecting...&lt;/<span style=color:#f92672>title</span>&gt;
+    <span style=color:#75715e>&lt;!-- Redirects to the correct GitHub Pages path in 0 seconds --&gt;</span>
+    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>http-equiv</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;refresh&#34;</span> <span style=color:#a6e22e>content</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;0; URL=&#39;/YOUR-REPO-NAME/&#39;&#34;</span>/&gt;
+&lt;/<span style=color:#f92672>head</span>&gt;
+&lt;<span style=color:#f92672>body</span>&gt;
+
+&lt;/<span style=color:#f92672>body</span>&gt;
+&lt;/<span style=color:#f92672>html</span>&gt;
+</code></pre></div><h1 id=alternatives>
+Alternatives
+<a class=heading-link href=#alternatives>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h1>
+<p>If Hugo didn&rsquo;t spark your interest, give a chance to <a href=https://docs.github.com/pt/pages/setting-up-a-github-pages-site-with-jekyll>Jekyll</a>,
+the static website generator endorsed by GitHub.</p>
 </div>
 <footer>
 </footer>
@@ -198,7 +226,6 @@ Publish
 </div>
 <footer class=footer>
 <section class=container>
-<p>Notes about software and personal development</p>
 ©
 2021 -
 2022
@@ -208,6 +235,6 @@ Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luiz
 </section>
 </footer>
 </main>
-<script src=/tales-tips-and-tricks/js/coder.min.03b17769f4f91ae35667e1f2a1ca8c16f50562576cf90ff32b3179926914daa5.js integrity="sha256-A7F3afT5GuNWZ+HyocqMFvUFYlds+Q/zKzF5kmkU2qU="></script>
+<script src=/tales-tips-and-tricks/js/coder.min.39a51230dce2ac866c049b52573e38bf60666af4bc63c1bdf203b9b2d95b1cd6.js integrity="sha256-OaUSMNzirIZsBJtSVz44v2BmavS8Y8G98gO5stlbHNY="></script>
 </body>
 </html>
