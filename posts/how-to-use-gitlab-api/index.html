@@ -1,0 +1,169 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=content-language content="en">
+<meta name=color-scheme content="light dark">
+<meta name=author content="Tales L. Aparecida">
+<meta name=description content="An introduction to GitLab's API for when you have to handle too many repositories at once">
+<meta name=keywords content="blog,developer,personal">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="How to use the GitLab API">
+<meta name=twitter:description content="An introduction to GitLab's API for when you have to handle too many repositories at once">
+<meta property="og:title" content="How to use the GitLab API">
+<meta property="og:description" content="An introduction to GitLab's API for when you have to handle too many repositories at once">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-01-07T19:45:00-03:00">
+<meta property="article:modified_time" content="2022-01-07T19:45:00-03:00">
+<title>
+How to use the GitLab API · Tales Tips and Tricks
+</title>
+<link rel=canonical href=https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/>
+<link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin>
+<link rel=stylesheet href=/tales-tips-and-tricks/css/coder.min.34dfa7b2f5cdeb0f5302b2628f4a7a4bfe88a2431e1397ee4ec605c56ab69701.css integrity="sha256-NN+nsvXN6w9TArJij0p6S/6IokMeE5fuTsYFxWq2lwE=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=/tales-tips-and-tricks/css/coder-dark.min.d8f89ef09509afb63b9b2595ee174e53cc51ce02a6f6a2179e1621f9389e4340.css integrity="sha256-2Pie8JUJr7Y7myWV7hdOU8xRzgKm9qIXnhYh+TieQ0A=" crossorigin=anonymous media=screen>
+<link rel=icon type=image/png href=/tales-tips-and-tricks/images/favicon-32x32.png sizes=32x32>
+<link rel=icon type=image/png href=/tales-tips-and-tricks/images/favicon-16x16.png sizes=16x16>
+<link rel=apple-touch-icon href=/tales-tips-and-tricks/images/apple-touch-icon.png>
+<link rel=apple-touch-icon sizes=180x180 href=/tales-tips-and-tricks/images/apple-touch-icon.png>
+<script defer src=https://twemoji.maxcdn.com/v/13.0.2/twemoji.min.js integrity=sha384-wyB/MspSJ/r2bT2kCj44qtsYRYlpzO2oAPhRj5myrWD63dt6qWv4x8AZe7Fl3K3b crossorigin=anonymous></script>
+<meta name=generator content="Hugo 0.91.2">
+</head>
+<body class="preload-transitions colorscheme-auto" onload=twemoji.parse(document.body)>
+<div class=float-container>
+<a id=dark-mode-toggle class=colorscheme-toggle>
+<i class="fa fa-adjust fa-fw" aria-hidden=true></i>
+</a>
+</div>
+<main class=wrapper>
+<nav class=navigation>
+<section class=container>
+<a class=navigation-title href=/tales-tips-and-tricks>
+Tales Tips and Tricks
+</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle>
+<i class="fa fa-bars fa-fw" aria-hidden=true></i>
+</label>
+<ul class=navigation-list>
+<li class=navigation-item>
+<a class=navigation-link href=/tales-tips-and-tricks/posts/>Blog</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=/tales-tips-and-tricks/categories/>Categories</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=/tales-tips-and-tricks/tags/>Tags</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=/tales-tips-and-tricks/about/>About</a>
+</li>
+</ul>
+</section>
+</nav>
+<div class=content>
+<section class="container post">
+<article>
+<header>
+<div class=post-title>
+<h1 class=title>
+<a class=title-link href=https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/>
+How to use the GitLab API
+</a>
+</h1>
+</div>
+<div class=post-meta>
+<div class=date>
+<span class=posted-on>
+<i class="fa fa-calendar" aria-hidden=true></i>
+<time datetime=2022-01-07T19:45:00-03:00>
+January 7, 2022
+</time>
+</span>
+<span class=reading-time>
+<i class="fa fa-clock-o" aria-hidden=true></i>
+2-minute read
+</span>
+</div>
+<div class=authors>
+<i class="fa fa-user" aria-hidden=true></i>
+<a href=/tales-tips-and-tricks/authors/tales-l.-aparecida/>Tales L. Aparecida</a></div>
+<div class=categories>
+<i class="fa fa-folder" aria-hidden=true></i>
+<a href=/tales-tips-and-tricks/categories/guides/>Guides</a></div>
+<div class=tags>
+<i class="fa fa-tag" aria-hidden=true></i>
+<span class=tag>
+<a href=/tales-tips-and-tricks/tags/gitlab/>gitlab</a>
+</span>
+<span class=separator>•</span>
+<span class=tag>
+<a href=/tales-tips-and-tricks/tags/api/>api</a>
+</span>
+<span class=separator>•</span>
+<span class=tag>
+<a href=/tales-tips-and-tricks/tags/code/>code</a>
+</span></div>
+</div>
+</header>
+<div>
+<img src=https://about.gitlab.com/images/press/logo/png/gitlab-logo-gray-rgb.png alt="Featured image">
+<h1 id=how-to-use-the-gitlab-api>
+How to Use the GitLab API
+<a class=heading-link href=#how-to-use-the-gitlab-api>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h1>
+<p>Sometimes, when you don&rsquo;t use a monorepo, it may be necessary to handle multiple repositories at once.
+GitLab provides an easy way to do that, even with a free account!
+All you have to do is find what you need in their <a href=https://docs.gitlab.com/ee/api/>documentation</a>.</p>
+<p>The first step, is to create an access token, for that go to the <a href=https://gitlab.com/-/profile>profile</a> page
+and find the <a href=https://gitlab.com/-/profile/personal_access_tokens>Access Tokens' settings</a>.
+There you&rsquo;ll be able to create a new token, with a configurable permission scope and expiration date.</p>
+<p>Lets say, for example, that you want to clone every repository from the group <strong>ID: 3253154</strong>.</p>
+<p><img src=/tales-tips-and-tricks/images/gitlab-group-id.png alt="GitLab Group ID: 3253154"></p>
+<p>To do that you can use the <a href=https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects>&ldquo;List a group&rsquo;s projects&rdquo;</a>,
+which can be achieved with a <code>read_api</code> permission.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>curl --request GET --header <span style=color:#e6db74>&#34;PRIVATE-TOKEN: this-should-be-your-token&#34;</span> <span style=color:#e6db74>&#34;https://gitlab.com/api/v4/groups/</span>$PROJECT_ID<span style=color:#e6db74>/projects?simple=true&#34;</span> &gt; /tmp/projects.json
+</code></pre></div><p>This will save a JSON with the ID, URL, name, and path of each project.
+You can use Python to handle it and print the SSH urls to clone, like so:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> json
+<span style=color:#66d9ef>with</span> open(<span style=color:#e6db74>&#39;/tmp/projects.json&#39;</span>) <span style=color:#66d9ef>as</span> fp:
+    group_info <span style=color:#f92672>=</span> json<span style=color:#f92672>.</span>load(fp)
+
+<span style=color:#66d9ef>for</span> project_info <span style=color:#f92672>in</span> group_info:
+    print(<span style=color:#e6db74>&#34;git clone&#34;</span>, project_info[<span style=color:#e6db74>&#39;ssh_url_to_repo&#39;</span>])
+</code></pre></div><p>You can also use <code>subprocess.run()</code> to clone them.</p>
+<p>If you want to, you can even make requests using Python directly,
+for example, to update every projects' Merge Request settings to use merge commits and forbid squash:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> requests
+token <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;this-should-be-your-token&#39;</span>
+<span style=color:#66d9ef>for</span> project_info <span style=color:#f92672>in</span> group_info:
+    requests<span style=color:#f92672>.</span>put(
+        <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;https://gitlab.com/api/v4/projects/</span><span style=color:#e6db74>{</span>project_info[<span style=color:#e6db74>&#39;id&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39;</span>,
+        headers<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#39;PRIVATE-TOKEN&#39;</span>:token},
+        data<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#39;merge_method&#39;</span>:<span style=color:#e6db74>&#39;merge&#39;</span>, <span style=color:#e6db74>&#39;squash_option&#39;</span>: <span style=color:#e6db74>&#39;never&#39;</span>},
+    )
+</code></pre></div><p>That&rsquo;s it. There&rsquo;s plenty more in their documentation, as I&rsquo;ve said before, be creative and let your problems guide you.</p>
+</div>
+<footer>
+</footer>
+</article>
+</section>
+</div>
+<footer class=footer>
+<section class=container>
+<p>Notes about software and personal development</p>
+©
+2021 -
+2022
+Tales L. Aparecida
+·
+Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/>Coder</a>.
+</section>
+</footer>
+</main>
+<script src=/tales-tips-and-tricks/js/coder.min.03b17769f4f91ae35667e1f2a1ca8c16f50562576cf90ff32b3179926914daa5.js integrity="sha256-A7F3afT5GuNWZ+HyocqMFvUFYlds+Q/zKzF5kmkU2qU="></script>
+</body>
+</html>

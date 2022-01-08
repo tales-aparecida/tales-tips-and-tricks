@@ -137,7 +137,7 @@ Add and customize a theme
 </h1>
 <p>Hugo community has created many (almost 300 up until now) beautiful themes. You can choose one at their <a href=themes.gohugo.io/>gallery</a>. Each one has its own set of customizations, which you can usually find more about in their GitHub page.</p>
 <p>This site, the one you are reading right now, uses <a href=https://github.com/luizdepra/hugo-coder/>Hugo-Coder</a> as its theme, created by <a href=https://github.com/luizdepra>Luiz de Prá</a>, which needed no effort besides cloning as a submodule with <code>git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder</code> and setting a <code>config.toml</code> file, which you may copy <a href=https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/config.toml>from my repo</a>.</p>
-<p><img src=https://github.com/luizdepra/hugo-coder/raw/master/images/screenshot.png alt="Hugo-coder home page"></p>
+<p><img src=https://github.com/luizdepra/hugo-coder/raw/main/images/screenshot.png alt="Hugo-coder home page"></p>
 <h1 id=add-some-content>
 Add some content
 <a class=heading-link href=#add-some-content>
@@ -187,7 +187,7 @@ Publish
 </h1>
 <p>At last, to publish your new static website there are some <a href=https://gohugo.io/hosting-and-deployment/hosting-on-github/>alternatives</a>, the one I&rsquo;ve chosen was <a href=https://help.github.com/articles/what-is-github-pages/>GitHub Pages</a> hosted on GitHub&rsquo;s github.io domain, using GitHub Actions.</p>
 <p>You just need to create a branch &ldquo;gh-pages&rdquo; then go to the repository settings and activate it as the source to your website.</p>
-<p><img src=./gh-pages.png alt="Activate GitHub Page in the repo settings"></p>
+<p><img src=/tales-tips-and-tricks/images/gh-pages.png alt="Activate GitHub Page in the repo settings"></p>
 <p>Then, create a <code>.github/workflows/gh-pages.yml</code> in your main branch to setup the GitHub Actions pipeline, which will build the statics into the <code>gh-pages</code> branch, you can copy my <a href=https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/.github/workflows/gh-pages.yml><code>gh-pages.yml</code></a> if you want to, which I got from <a href=https://github.com/peaceiris/actions-hugo>https://github.com/peaceiris/actions-hugo</a>.</p>
 <p>That&rsquo;s it, in your next <code>git push</code> you will trigger the deploy and your website will be accessible through the URL informed while activating the GitHub Pages. :D</p>
 </div>
