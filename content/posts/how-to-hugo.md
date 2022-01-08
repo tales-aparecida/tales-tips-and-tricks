@@ -15,8 +15,6 @@ featuredImage = "https://raw.githubusercontent.com/gohugoio/gohugoioTheme/master
 >
 > src: https://github.com/gohugoio/hugo
 
-
-
 Or, in my case, it's a tool that allowed me to setup my own blog, writing posts using Markdown and github.io for hosting.
 
 You can follow their [tutorial](https://gohugo.io/getting-started/quick-start/) to setup your static website too! Trust me, it's pretty straight forward, just:
@@ -97,3 +95,30 @@ You just need to create a branch "gh-pages" then go to the repository settings a
 Then, create a `.github/workflows/gh-pages.yml` in your main branch to setup the GitHub Actions pipeline, which will build the statics into the `gh-pages` branch, you can copy my [`gh-pages.yml`](https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/.github/workflows/gh-pages.yml) if you want to, which I got from https://github.com/peaceiris/actions-hugo.
 
 That's it, in your next `git push` you will trigger the deploy and your website will be accessible through the URL informed while activating the GitHub Pages. :D
+
+## User/Organization page vs Repository page
+
+You'll notice that the URL hosting your website looks something like: `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/`.
+To fix that, either rename your repository to `YOUR-USERNAME.github.io` or create a repository with that name with a page responsible for redirecting into the correct path.
+In that case, you just need to activate the GitHub Pages in the new repo and add the file `index.html`:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Redirecting...</title>
+    <!-- Redirects to the correct GitHub Pages path in 0 seconds -->
+    <meta http-equiv="refresh" content="0; URL='/YOUR-REPO-NAME/'"/>
+</head>
+<body>
+
+</body>
+</html>
+```
+
+
+# Alternatives
+
+If Hugo didn't spark your interest, give a chance to [Jekyll](https://docs.github.com/pt/pages/setting-up-a-github-pages-site-with-jekyll),
+the static website generator endorsed by GitHub.
