@@ -1,6 +1,6 @@
 +++
 title = "About"
-description = "About me"
+summary = "About me"
 date = 2021-06-29T16:23:24-03:00
 aliases = ["about-me", "about-us", "contact"]
 featuredImage = "https://en.gravatar.com/userimage/23950340/6a9da95b77d4e6d6e97b132c11aaaac9.jpeg"

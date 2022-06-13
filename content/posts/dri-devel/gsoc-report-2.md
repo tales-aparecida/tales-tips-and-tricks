@@ -1,6 +1,6 @@
 +++
 title = "Finding bugs using IGT and git bisect"
-description = "How to combine IGT GPU Tools with Git bisect to report an issue in the AMDGPU driver"
+summary = "How to combine IGT GPU Tools with Git bisect to report an issue in the AMDGPU driver"
 date = 2022-06-12T12:00:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]

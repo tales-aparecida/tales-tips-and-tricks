@@ -1,6 +1,6 @@
 +++
 title = "My experience as a Google Summer of Code Contributor - Introduction"
-description = "I've been accepted as a GSOC contributor for X.Org! Let me tell you a bit about my project and the initial experience"
+summary = "I've been accepted as a GSOC contributor for X.Org! Let me tell you a bit about my project and the initial experience"
 date = 2022-06-06T12:00:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]

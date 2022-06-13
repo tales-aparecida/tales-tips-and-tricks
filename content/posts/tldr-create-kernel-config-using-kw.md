@@ -1,6 +1,6 @@
 +++
 title = "#TLDR - How to create a basic .config using KWorkflow"
-description = "Micro-post teaching how to create a basic .config using Kworkflow"
+summary = "Micro-post teaching how to create a basic .config using Kworkflow"
 date = 2022-06-13T09:00:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]

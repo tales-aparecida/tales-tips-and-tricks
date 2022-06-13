@@ -1,6 +1,6 @@
 +++
 title = "How to setup your own website powered by Hugo"
-description = "How to use Hugo setup your own website"
+summary = "How to use Hugo to setup your own website"
 date = "2021-06-29T16:23:24-03:00"
 draft = false
 authors = ["Tales L. Aparecida"]

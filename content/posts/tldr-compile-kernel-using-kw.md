@@ -1,6 +1,6 @@
 +++
 title = "#TLDR - How to compile the Linux Kernel using KWorkflow"
-description = "Micro-post teaching how to compile the Linux Kernel using Kworkflow"
+summary = "Micro-post teaching how to compile the Linux Kernel using Kworkflow"
 date = 2022-06-14T09:00:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]

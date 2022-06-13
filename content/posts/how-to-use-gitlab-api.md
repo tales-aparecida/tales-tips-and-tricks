@@ -1,6 +1,6 @@
 +++
 title = "How to use the GitLab API"
-description = "An introduction to GitLab's API for when you have to handle too many repositories at once"
+summary = "An introduction to GitLab's API for when you have to handle too many repositories at once"
 date = 2022-01-07T19:45:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]
