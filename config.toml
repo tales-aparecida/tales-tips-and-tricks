@@ -74,7 +74,11 @@ disableComments = true
   icon = "fa fa-envelope fa-2x"
   weight = 4
   url = "mailto:tales.aparecida@gmail.com"
-
+[[params.social]]
+  name = "RSS"
+  icon = "fa fa-rss fa-2x"
+  weight = 4
+  url = "index.xml"
 
 
 [[menu.main]]
