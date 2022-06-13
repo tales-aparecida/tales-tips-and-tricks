@@ -4,7 +4,7 @@ description = "How to combine IGT GPU Tools with Git bisect to report an issue i
 date = 2022-06-12T12:00:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]
-categories = ["Report"]
+categories = ["DRI-Devel"]
 tags = ['gsoc', 'kernel', 'amdgpu', 'igt']
 featuredImage = "/tales-tips-and-tricks/images/repair-bug.jpg"
 +++

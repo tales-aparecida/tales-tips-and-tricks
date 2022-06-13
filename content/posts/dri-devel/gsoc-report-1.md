@@ -4,7 +4,7 @@ description = "I've been accepted as a GSOC contributor for X.Org! Let me tell y
 date = 2022-06-06T12:00:00-03:00
 draft = false
 authors = ["Tales L. Aparecida"]
-categories = ["Report"]
+categories = ["DRI-Devel"]
 tags = ['gsoc', 'kernel', 'amdgpu']
 featuredImage = "/tales-tips-and-tricks/images/party-penguin.jpg"
 +++
