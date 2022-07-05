@@ -1,1 +1,110 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/hugo/</link><description>Recent content in hugo on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 29 Jun 2021 16:23:24 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>How to setup your own website powered by Hugo</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</link><pubDate>Tue, 29 Jun 2021 16:23:24 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</guid><description>How to use Hugo to setup your own website</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/hugo/</link><description>Recent content in hugo on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 29 Jun 2021 16:23:24 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>How to setup your own website powered by Hugo</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</link><pubDate>Tue, 29 Jun 2021 16:23:24 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</guid><description>&lt;h1 id="what-is-hugo">
+What is Hugo
+&lt;a class="heading-link" href="#what-is-hugo">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;blockquote>
+&lt;p>Hugo is a static HTML and CSS website generator written in &lt;a href="https://golang.org/">Go&lt;/a>. It is optimized for speed, ease of use, and configurability. Hugo takes a directory with content and templates and renders them into a full HTML website.&lt;/p>
+&lt;p>src: &lt;a href="https://github.com/gohugoio/hugo">https://github.com/gohugoio/hugo&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>Or, in my case, it&amp;rsquo;s a tool that allowed me to setup my own blog, writing posts using Markdown and github.io for hosting.&lt;/p>
+&lt;p>You can follow their &lt;a href="https://gohugo.io/getting-started/quick-start/">tutorial&lt;/a> to setup your static website too! Trust me, it&amp;rsquo;s pretty straight forward, just:&lt;/p>
+&lt;ol>
+&lt;li>&lt;a href="https://gohugo.io/getting-started/installing/">Install Hugo&lt;/a>&lt;/li>
+&lt;li>Create a new site with: &lt;code>hugo new site NAME_HERE&lt;/code>&lt;/li>
+&lt;li>Add and customize a theme (there are dozens of options!)&lt;/li>
+&lt;li>Add some content&lt;/li>
+&lt;li>Check your workings&lt;/li>
+&lt;li>Publish!&lt;/li>
+&lt;/ol>
+&lt;h1 id="add-and-customize-a-theme">
+Add and customize a theme
+&lt;a class="heading-link" href="#add-and-customize-a-theme">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>Hugo community has created many (almost 300 up until now) beautiful themes. You can choose one at their &lt;a href="themes.gohugo.io/">gallery&lt;/a>. Each one has its own set of customizations, which you can usually find more about in their GitHub page.&lt;/p>
+&lt;p>This site, the one you are reading right now, uses &lt;a href="https://github.com/luizdepra/hugo-coder/">Hugo-Coder&lt;/a> as its theme, created by &lt;a href="https://github.com/luizdepra">Luiz de Prá&lt;/a>, which needed no effort besides cloning as a submodule with &lt;code>git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder&lt;/code> and setting a &lt;code>config.toml&lt;/code> file, which you may copy &lt;a href="https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/config.toml">from my repo&lt;/a>.&lt;/p>
+&lt;p>&lt;img src="https://github.com/luizdepra/hugo-coder/raw/main/images/screenshot.png" alt="Hugo-coder home page">&lt;/p>
+&lt;h1 id="add-some-content">
+Add some content
+&lt;a class="heading-link" href="#add-some-content">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>In this step you will need to run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>hugo new posts/my-first-post.md
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And then fill the &lt;a href="https://www.markdownguide.org/">markdown&lt;/a> file with your own ideas!&lt;/p>
+&lt;p>Note that Hugo posts have a header called &amp;ldquo;&lt;a href="https://gohugo.io/content-management/front-matter">Front Matter&lt;/a>&amp;rdquo;, a section at the top of the file in &lt;a href="https://gohugo.io/content-management/front-matter#front-matter-formats">4 different possible formats&lt;/a> where you can set attributes about your post, like &lt;code>title&lt;/code>, &lt;code>description&lt;/code>, &lt;code>date&lt;/code> and &lt;code>tags&lt;/code>.&lt;/p>
+&lt;h1 id="check-your-workings">
+Check your workings
+&lt;a class="heading-link" href="#check-your-workings">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>To visualize your website in a browser, run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>hugo server -D
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If there aren&amp;rsquo;t any errors, this should print something like:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>Start building sites …
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> | EN
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-------------------+-----
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Pages | 26
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Paginator pages | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Non-page files | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Static files | 5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Processed images | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Aliases | 10
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Sitemaps | 1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Cleaned | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Built in 79 ms
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Watching for changes in /home/tales/codes/tales-tips-and-tricks/{archetypes,content,data,layouts,static,themes}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Watching for config changes in /home/tales/codes/tales-tips-and-tricks/config.toml, /home/tales/codes/tales-tips-and-tricks/themes/hugo-coder/config.toml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Environment: &amp;#34;development&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Serving pages from memory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Press Ctrl+C to stop
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which, if you read it carefully, tells that your website can be accessed through http://localhost:1313.&lt;/p>
+&lt;h1 id="publish">
+Publish
+&lt;a class="heading-link" href="#publish">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>At last, to publish your new static website there are some &lt;a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">alternatives&lt;/a>, the one I&amp;rsquo;ve chosen was &lt;a href="https://help.github.com/articles/what-is-github-pages/">GitHub Pages&lt;/a> hosted on GitHub&amp;rsquo;s github.io domain, using GitHub Actions.&lt;/p>
+&lt;p>You just need to create a branch &amp;ldquo;gh-pages&amp;rdquo; then go to the repository settings and activate it as the source to your website.&lt;/p>
+&lt;p>&lt;img src="https://tales-aparecida.github.io/tales-tips-and-tricks/tales-tips-and-tricks/images/gh-pages.png" alt="Activate GitHub Page in the repo settings">&lt;/p>
+&lt;p>Then, create a &lt;code>.github/workflows/gh-pages.yml&lt;/code> in your main branch to setup the GitHub Actions pipeline, which will build the statics into the &lt;code>gh-pages&lt;/code> branch, you can copy my &lt;a href="https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/.github/workflows/gh-pages.yml">&lt;code>gh-pages.yml&lt;/code>&lt;/a> if you want to, which I got from &lt;a href="https://github.com/peaceiris/actions-hugo">https://github.com/peaceiris/actions-hugo&lt;/a>.&lt;/p>
+&lt;p>That&amp;rsquo;s it, in your next &lt;code>git push&lt;/code> you will trigger the deploy and your website will be accessible through the URL informed while activating the GitHub Pages. :D&lt;/p>
+&lt;h2 id="userorganization-page-vs-repository-page">
+User/Organization page vs Repository page
+&lt;a class="heading-link" href="#userorganization-page-vs-repository-page">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>You&amp;rsquo;ll notice that the URL hosting your website looks something like: &lt;code>https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/&lt;/code>.
+To fix that, either rename your repository to &lt;code>YOUR-USERNAME.github.io&lt;/code> or create a repository with that name with a page responsible for redirecting into the correct path.
+In that case, you just need to activate the GitHub Pages in the new repo and add the file &lt;code>index.html&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">charset&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;utf-8&amp;#34;&lt;/span>/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">title&lt;/span>&amp;gt;Redirecting...&amp;lt;/&lt;span style="color:#f92672">title&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- Redirects to the correct GitHub Pages path in 0 seconds --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">http-equiv&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;refresh&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">content&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;0; URL=&amp;#39;/YOUR-REPO-NAME/&amp;#39;&amp;#34;&lt;/span>/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="alternatives">
+Alternatives
+&lt;a class="heading-link" href="#alternatives">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>If Hugo didn&amp;rsquo;t spark your interest, give a chance to &lt;a href="https://docs.github.com/pt/pages/setting-up-a-github-pages-site-with-jekyll">Jekyll&lt;/a>,
+the static website generator endorsed by GitHub.&lt;/p></description></item></channel></rss>

@@ -1,1 +1,326 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/</link><description>Recent content on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/index.xml" rel="self" type="application/rss+xml"/><item><title>Reviewing patches</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</link><pubDate>Mon, 27 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</guid><description>Let&amp;rsquo;s learn together how to apply community patches, test them and be part of the community.</description></item><item><title>#TLDR - How to search for files containing two or more strings</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-find-files-with-multiple-patterns/</link><pubDate>Sat, 18 Jun 2022 16:40:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-find-files-with-multiple-patterns/</guid><description>Micro-post teaching one way to find files matching multiple patterns chaining grep invocations.</description></item><item><title>#TLDR - How to compile the Linux Kernel using KWorkflow</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-compile-kernel-using-kw/</link><pubDate>Tue, 14 Jun 2022 09:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-compile-kernel-using-kw/</guid><description>Micro-post teaching how to compile the Linux Kernel using Kworkflow</description></item><item><title>#TLDR - How to create a basic .config using KWorkflow</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-create-kernel-config-using-kw/</link><pubDate>Mon, 13 Jun 2022 09:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-create-kernel-config-using-kw/</guid><description>Micro-post teaching how to create a basic .config using Kworkflow</description></item><item><title>Finding bugs using IGT and git bisect</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</link><pubDate>Sun, 12 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</guid><description>How to combine IGT GPU Tools with Git bisect to report an issue in the AMDGPU driver</description></item><item><title>My experience as a Google Summer of Code Contributor - Introduction</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</link><pubDate>Mon, 06 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</guid><description>I&amp;rsquo;ve been accepted as a GSOC contributor for X.Org! Let me tell you a bit about my project and the initial experience</description></item><item><title>How to use the GitLab API</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</link><pubDate>Fri, 07 Jan 2022 19:45:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</guid><description>An introduction to GitLab&amp;rsquo;s API for when you have to handle too many repositories at once</description></item><item><title>How to setup your own website powered by Hugo</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</link><pubDate>Tue, 29 Jun 2021 16:23:24 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</guid><description>How to use Hugo to setup your own website</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/</link><description>Recent content on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/index.xml" rel="self" type="application/rss+xml"/><item><title>Reviewing patches</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</link><pubDate>Mon, 27 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</guid><description>&lt;p>Being part of the community, is more than just writing code and sending patches, it is also keeping track of the IRC discussions and reading the mailing lists to &lt;strong>review&lt;/strong> and &lt;strong>test&lt;/strong> patches sent from others whenever you can.&lt;/p>
+&lt;p>Both environments are not the most welcoming, but there are plenty of tools from the &lt;em>community&lt;/em> to help parsing them. In this post I&amp;rsquo;ll talk about &lt;a href="https://github.com/mricon/b4">b4&lt;/a>, suggested by my GSOC mentor &lt;a href="http://andrealmeid.com/">André&lt;/a>, a tool to help with applying patches.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;h1 id="applying-patches">
+Applying patches
+&lt;a class="heading-link" href="#applying-patches">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>I assume you already know that when we refer to &amp;ldquo;git commits&amp;rdquo;, we are basically talking about snapshots of the files in the repository (&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F">more about that&lt;/a>); it&amp;rsquo;s almost like, for each set of changes, we archived and compressed the whole repository folder an gave the result a name.&lt;/p>
+&lt;div class="notice example">
+&lt;div class="notice-title">
+&lt;i class="fa fa-file-text" aria-hidden="true">&lt;/i>Example
+&lt;/div>
+&lt;div class="notice-content">&lt;ul>
+&lt;li>v1-created-wireframes.tar.gz&lt;/li>
+&lt;li>v2-minimum-testable-product.tar.gz&lt;/li>
+&lt;li>v2.1-fixed-download-icon.tar.gz&lt;/li>
+&lt;li>v3&amp;hellip;&lt;/li>
+&lt;/ul>&lt;/div>
+&lt;/div>
+&lt;p>When working in a large project with so many people, like we have in the Linux Kernel community, it would be impractical to send a file containing the whole repository just to show some changes in some files, specially in the old days, when there probably wasn&amp;rsquo;t even that much bandwidth. So, in order to &lt;em>share your workings&lt;/em> with the community you just have to tell them &amp;ldquo;add X to line N, remove Y from the following line&amp;rdquo;, in other words, you have to share only the &lt;strong>differences&lt;/strong> you brought to the code.&lt;/p>
+&lt;p>There is a command to convert your commits into these messages showing only the &amp;ldquo;diffs&amp;rdquo; in your code: &lt;a href="https://git-scm.com/docs/git-format-patch">&lt;code>git format-patch&lt;/code>&lt;/a>. It&amp;rsquo;s worth mentioning that Git uses its own enhanced format of &lt;code>diff&lt;/code> (see &lt;a href="https://git-scm.com/docs/git-diff">&lt;code>git diff&lt;/code>&lt;/a>), which tries to humanize and contextualize some changes, either by recognizing scopes in some languages or simply including surrounding lines in the output. So, lets say you created &lt;em>a couple&lt;/em> commits based on &lt;a href="https://github.com/torvalds/linux">&lt;code>master&lt;/code>&lt;/a> and want to extract them as &lt;em>patches&lt;/em>, you could run &lt;code>git format-patch master&lt;/code>, which would create &lt;em>a couple&lt;/em> numbered files. You could then send them via email with &lt;a href="https://git-scm.com/docs/git-send-email">&lt;code>git send-mail&lt;/code>&lt;/a>, but that&amp;rsquo;s another talk, my point here was just to introduce the concept of patches, you can read more at &lt;a href="https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project">https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project&lt;/a>.&lt;/p>
+&lt;div class="notice note">
+&lt;div class="notice-title">
+&lt;i class="fa fa-sticky-note" aria-hidden="true">&lt;/i>Note
+&lt;/div>
+&lt;div class="notice-content">Nowadays there are plenty of source-code hosts, like Github and Gitlab, that provide an alternative to email patching through &lt;a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">Pull&lt;/a>/&lt;a href="https://docs.gitlab.com/ee/user/project/merge_requests/">Merge Request&lt;/a>.&lt;/div>
+&lt;/div>
+&lt;p>Now, lets say somebody has already sent their patch to some mailing list, like &lt;a href="https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/">https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/&lt;/a>. How can you assert that their code compiles and works as described?&lt;/p>
+&lt;p>You could find the link and download the &lt;code>mbox.gz&lt;/code> file from the &lt;a href="https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/">lore.kernel.org&lt;/a> page, or find the series at &lt;a href="https://patchwork.kernel.org/project/dri-devel/list/?series=654239">patchwork.kernel.org&lt;/a> to do the same, which then would allow you to use &lt;a href="https://git-scm.com/docs/git-am">&lt;code>git am&lt;/code>&lt;/a> to apply the patches, recreating the commits in your local environment. That process is easy enough but it can be improved as far as running a command over the &lt;code>lore.kernel.org&lt;/code> URL with &lt;a href="https://github.com/mricon/b4">&lt;code>b4&lt;/code>&lt;/a>.&lt;/p>
+&lt;div class="notice info">
+&lt;div class="notice-title">
+&lt;i class="fa fa-exclamation-circle" aria-hidden="true">&lt;/i>Info
+&lt;/div>
+&lt;div class="notice-content">B4 is a helper utility to work with patches made available via a public-inbox archive like lore.kernel.org. It is written to make it easier to participate in a patch-based workflows, like those used in the Linux kernel development.&lt;/div>
+&lt;/div>
+&lt;h1 id="b4---its-not-an-acronym-its-just-a-name">
+B4 - it&amp;rsquo;s not an acronym, it&amp;rsquo;s just a name
+&lt;a class="heading-link" href="#b4---its-not-an-acronym-its-just-a-name">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>&lt;strong>B4&lt;/strong> is a Python package and can be easily installed with &lt;code>python3 -m pip install --user b4&lt;/code>. I&amp;rsquo;d suggest using a &lt;a href="https://docs.python.org/pt-br/3/library/venv.html">virtual environment&lt;/a> to avoid problems with dependencies, but this post won&amp;rsquo;t cover that.&lt;/p>
+&lt;p>It comes with a helpful &lt;code>b4 --help&lt;/code>, which tells us that, to apply the mentioned patch series you&amp;rsquo;d just need to run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>b4 am https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which will download the patch series as a mbox file and the cover letter as another, so that you could then use &lt;code>git am&lt;/code> on it the former. With some luck (and communication), everything will apply without any conflicts.&lt;/p>
+&lt;p>That&amp;rsquo;s it, good luck on your reviews and thanks for reading!&lt;/p>
+&lt;hr>
+&lt;p>&amp;ldquo;applying patch to belly&amp;rdquo; by The EnergySmart Academy is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit &lt;a href="https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse">https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse&lt;/a>.&lt;/p></description></item><item><title>#TLDR - How to search for files containing two or more strings</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-find-files-with-multiple-patterns/</link><pubDate>Sat, 18 Jun 2022 16:40:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-find-files-with-multiple-patterns/</guid><description>&lt;p>You might already know &lt;code>grep&lt;/code>, the program to find and return lines matching a given pattern, but what if you want to find files matching multiple patterns simultaneously? It&amp;rsquo;s simple, just chain searches, i.e find files matching the first pattern, then find files matching another pattern within the resulting list of the first search, and so on:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ grep -lr &lt;span style="color:#e6db74">&amp;#34;first pattern&amp;#34;&lt;/span> folder/to/search/* | grep -l &lt;span style="color:#e6db74">&amp;#34;another pattern&amp;#34;&lt;/span> &lt;span style="color:#e6db74">`&lt;/span>cat -&lt;span style="color:#e6db74">`&lt;/span> | grep -l &lt;span style="color:#e6db74">&amp;#34;and so on...&amp;#34;&lt;/span> &lt;span style="color:#e6db74">`&lt;/span>cat -&lt;span style="color:#e6db74">`&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Using a real example; let&amp;rsquo;s search, in the Linux kernel folder, for &lt;code>.c&lt;/code> and &lt;code>.h&lt;/code> files importing &lt;code>&amp;quot;kunit/test.h&amp;quot;&lt;/code> than get their lines containing the word &amp;ldquo;module&amp;rdquo; (case-insensitive):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ grep -lr --include &lt;span style="color:#e6db74">&amp;#34;*.[ch]&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#39;kunit/test.h&amp;#39;&lt;/span> ./linux | grep -i &lt;span style="color:#e6db74">&amp;#39;module&amp;#39;&lt;/span> &lt;span style="color:#e6db74">`&lt;/span>cat -&lt;span style="color:#e6db74">`&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="notice info">
+&lt;div class="notice-title">
+&lt;i class="fa fa-exclamation-circle" aria-hidden="true">&lt;/i>Info
+&lt;/div>
+&lt;div class="notice-content">&lt;ul>
+&lt;li>&lt;code>grep&lt;/code>: command&lt;/li>
+&lt;li>&lt;code>-l&lt;/code>, &lt;code>--files-with-matches&lt;/code>: Suppress normal output; instead print the name of each file matching the pattern.&lt;/li>
+&lt;li>&lt;code>-r&lt;/code>, &lt;code>--recursive&lt;/code>: Read all files under each directory, recursively.&lt;/li>
+&lt;li>&lt;code>--include=GLOB&lt;/code>: Search only files whose base name matches GLOB using wildcard matching; here, files with the extensions &amp;ldquo;.c&amp;rdquo; or &amp;ldquo;.h&amp;rdquo;.&lt;/li>
+&lt;li>&lt;code>'kunit/test.h'&lt;/code>: find files with this string&lt;/li>
+&lt;li>&lt;code>./linux&lt;/code>: Start at &amp;ldquo;linux&amp;rdquo; folder under the current working directory.&lt;/li>
+&lt;li>&lt;code>| grep&lt;/code>: pipe the output of the first command (list of filenames) to the next search&lt;/li>
+&lt;li>&lt;code>-i&lt;/code>, &lt;code>--ignore-case&lt;/code>: Use case-insensitive pattern matching.&lt;/li>
+&lt;li>&lt;code>'module'&lt;/code>: this time, search for the string &amp;ldquo;module&amp;rdquo;&lt;/li>
+&lt;li>&lt;code>`cat -`&lt;/code>: search the files given by the standard input, in this case the piped result from the first &lt;code>grep&lt;/code>.&lt;/li>
+&lt;/ul>&lt;/div>
+&lt;/div>
+&lt;p>This should run almost instantaneously, because &lt;code>grep&lt;/code> is powered by &lt;em>magic&lt;/em>.&lt;/p>
+&lt;p>FYI: I&amp;rsquo;ve used this command to find out whether any Kunit tests were being exported as a module. Turns out, no, at least not that I could find.&lt;/p>
+&lt;hr>
+&lt;p>This is a micro-post about the GNU/Linux environment, its main purpose is to highlight and redirect to valuable resources.&lt;/p></description></item><item><title>#TLDR - How to compile the Linux Kernel using KWorkflow</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-compile-kernel-using-kw/</link><pubDate>Tue, 14 Jun 2022 09:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-compile-kernel-using-kw/</guid><description>&lt;p>If you already have a &lt;code>.config&lt;/code> file ready, one way to compile the Linux Kernel is to install &lt;a href="https://github.com/kworkflow/kworkflow">kw&lt;/a> and run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ kw build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The command is time and resource intensive, so it might slow down your system for some time. It might fail and ask you to install some dependencies. For more information read the &lt;a href="https://kworkflow.org/man/features/build.html">&lt;code>kw build&lt;/code> documentation&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;p>This is a micro-post about the Linux Kernel compilation process, its main purpose is to highlight and redirect to valuable resources.&lt;/p></description></item><item><title>#TLDR - How to create a basic .config using KWorkflow</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-create-kernel-config-using-kw/</link><pubDate>Mon, 13 Jun 2022 09:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/tldr-create-kernel-config-using-kw/</guid><description>&lt;p>One way to create a good enough &lt;code>.config&lt;/code> file is to install &lt;a href="https://github.com/kworkflow/kworkflow">kw&lt;/a> and run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ kw configm --fetch --optimize
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The command might ask if you want to overwrite the existing &lt;code>.config&lt;/code> file. It might also ask to define some other settings which, in general, will work when choosing the default option. Read more about the command at the &lt;a href="https://kworkflow.org/man/features/configm.html">&lt;code>kw configm&lt;/code> documentation&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;p>This is a micro-post about the Linux Kernel compilation process, its main purpose is to highlight and redirect to valuable resources.&lt;/p></description></item><item><title>Finding bugs using IGT and git bisect</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</link><pubDate>Sun, 12 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</guid><description>&lt;p>The first step to eliminate bugs is to find a way how to reproduce them consistently. &lt;em>Wait&amp;hellip; what?&lt;/em>&lt;/p>
+&lt;p>Test suites are great for that, since they can simulate very specific behavior in a timely manner. &lt;a href="https://gitlab.freedesktop.org/drm/igt-gpu-tools">IGT GPU Tools&lt;/a> is a collection of tools for development and testing of the DRM drivers, and, as such, it can help us to find and reproduce bugs.&lt;/p>
+&lt;p>I intend to help expand the AMDGPU tests&amp;rsquo; list in my the &lt;a href="https://summerofcode.withgoogle.com/proposals/details/TKAqZe03">GSoC project&lt;/a>, so it made sense trying to run them right away. Cloned and built the IGT project then tried to run the &amp;ldquo;amdgpu&amp;rdquo; tests using a TTY in &lt;a href="https://ubuntuhandbook.org/index.php/2020/05/boot-ubuntu-20-04-command-console/">text mode&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ ./scripts/run-tests.sh -t &lt;span style="color:#e6db74">&amp;#34;.*amdgpu.*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Unfortunately, the tests failed and &lt;em>never came to a stop&lt;/em>. I tried interrupting the process using different techniques but, in the end, had to reboot pressing the Reset button. Looking through the partial results I found that one of the subtests of &lt;code>amd_cs_nop&lt;/code> was causing the problem&amp;hellip; But why weren&amp;rsquo;t the test just failing or crashing?&lt;/p>
+&lt;p>In an attempt to debug what was happening inside the subtest I enabled the DRM debugging messages with:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>echo 0x19F | sudo tee /sys/module/drm/parameters/debug
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This &lt;a href="https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-internals.html#c.drm_debug_category">mask&lt;/a> activates all debugging logs but &amp;ldquo;verbose vblank&amp;rdquo; and &amp;ldquo;verbose atomic state&amp;rdquo;. Unfortunately, again, this debugging logs only managed to show me, with my limited knowledge, that &lt;em>something&lt;/em> had been locked in an infinite loop.&lt;/p>
+&lt;div class="notice tip">
+&lt;div class="notice-title">
+&lt;i class="fa fa-lightbulb-o" aria-hidden="true">&lt;/i>Tip
+&lt;/div>
+&lt;div class="notice-content">Ask for help!&lt;/div>
+&lt;/div>
+&lt;p>After sharing my experience with my mentors, they assured me the problem was &lt;em>probably&lt;/em> caused by the kernel code itself, not with my setup or my compilation &lt;code>.config&lt;/code>. So, to pinpoint what part of the code was causing the problem I could look through space (stepping throughout the calls with &lt;strong>gdb&lt;/strong>) or time (using &lt;strong>git&lt;/strong>) and I choose the latter.&lt;/p>
+&lt;p>So now the plan was to find when the bug was introduced. Luckily it wasn&amp;rsquo;t so hard, a single &lt;code>git checkout&lt;/code> to the previous release in the &lt;a href="git@gitlab.freedesktop.org:agd5f/linux.git">&lt;code>amd-staging-drm-next&lt;/code>&lt;/a> branch, which was &lt;code>v5.16&lt;/code>, only 1000 commits or so behind the HEAD of the branch. It might seem like a lot to go through, but our time-machine is quite fast: &lt;a href="https://git-scm.com/docs/git-bisect">&lt;code>git bisect&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>According to Wikipedia, the &lt;a href="https://en.wikipedia.org/wiki/Bisection_method">bisection method&lt;/a> is a root-finding method that applies to any continuous function for which one knows two values with opposite signs. You probably already know it as binary-search. In this case, we are searching for the first commit in which the test fails, so to start our journey&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git bisect start
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git bisect bad &lt;span style="color:#75715e"># HEAD&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git bisect good v5.16
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And with it, &lt;code>git&lt;/code> informs us there will be around 10 steps and checks out to the middle of those commits. For each step, build, deploy, reboot into the new kernel and run tests. Quite tedious and time consuming. Right now, I&amp;rsquo;m not sure I could do it in a QEMU environment, but certainly, if I ever need to bisect the kernel in the future I&amp;rsquo;ll look into it, because in that case I would be able to use &lt;code>git bisect run&lt;/code>, which would allow the whole process to be automatized.&lt;/p>
+&lt;div class="notice tip">
+&lt;div class="notice-title">
+&lt;i class="fa fa-lightbulb-o" aria-hidden="true">&lt;/i>Tip
+&lt;/div>
+&lt;div class="notice-content">Always read the &lt;strong>build&lt;/strong> result before &lt;strong>deploying&lt;/strong>.&lt;/div>
+&lt;/div>
+&lt;p>In the end, the whole process took a full afternoon&amp;hellip; just to find myself in a failed bisection. I had the misfortune of making some mistake in the middle of the road, probably skipping the &lt;em>build&lt;/em> step by accident due to a compiling error, and marked a commit with the wrong flag. After restarting the bisect in the following day, I made sure to avoid my mistake be renaming each build with the short hash of the commit I was compiling. And finally 🎉, found the first broken commit: &lt;a href="https://gitlab.freedesktop.org/agd5f/linux/-/commit/e68efb27647f2106d6b545667f35b2ea39746b57">https://gitlab.freedesktop.org/agd5f/linux/-/commit/e68efb27647f2106d6b545667f35b2ea39746b57&lt;/a>&lt;/p>
+&lt;p>Well&amp;hellip; at least, I found the commit where the &lt;code>amd_cs_nop&lt;/code> started failing. It looks promising, given it handles a mutex lock, and my mentors think so as well. Next step was reporting the bug, by simply creating an issue following the &amp;ldquo;BUG template&amp;rdquo; given at &lt;a href="https://gitlab.freedesktop.org/drm/amd/-/issues/">https://gitlab.freedesktop.org/drm/amd/-/issues/&lt;/a>:&lt;/p>
+&lt;div class="notice info">
+&lt;div class="notice-title">
+&lt;i class="fa fa-exclamation-circle" aria-hidden="true">&lt;/i>Info
+&lt;/div>
+&lt;div class="notice-content">&lt;a href="https://gitlab.freedesktop.org/drm/amd/-/issues/2048">https://gitlab.freedesktop.org/drm/amd/-/issues/2048&lt;/a>&lt;/div>
+&lt;/div>
+&lt;p>And that&amp;rsquo;s that. Thanks for reading. ❤️&lt;/p>
+&lt;hr>
+&lt;p>&amp;ldquo;Repair Bug&amp;rdquo; by AZRainman is licensed under CC BY 2.0. To view a copy of this license, visit &lt;a href="https://creativecommons.org/licenses/by/2.0/?ref=openverse">https://creativecommons.org/licenses/by/2.0/?ref=openverse&lt;/a>.&lt;/p></description></item><item><title>My experience as a Google Summer of Code Contributor - Introduction</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</link><pubDate>Mon, 06 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</guid><description>&lt;p>So it begins!&lt;/p>
+&lt;p>With some pushes and pulls from friends, I&amp;rsquo;ve been studying the Linux Graphical stack for some time now. After some minor patches to both &lt;a href="https://gitlab.freedesktop.org/mesa/mesa">Mesa&lt;/a> and the &lt;a href="https://lore.kernel.org/all/?q=tales.aparecida@gmail.com">Linux Kernel&lt;/a>, I followed the &lt;a href="https://summerofcode.withgoogle.com/programs/2022/organizations/xorg-foundation">instructions&lt;/a> thoroughly and landed a successful &lt;a href="https://summerofcode.withgoogle.com/proposals/details/TKAqZe03">Google Summer of Code proposal&lt;/a>:&lt;/p>
+&lt;h1 id="introduce-unit-tests-to-the-amdgpu-dce-component">
+Introduce Unit Tests to the AMDGPU “DCE” Component
+&lt;a class="heading-link" href="#introduce-unit-tests-to-the-amdgpu-dce-component">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>My project’s primary goal is to create unit tests using KUnit for the AMDGPU driver focused on the Display and Compositing Engine (DCE) 11.2, which will be tested on the GPU “RX 580”.&lt;/p>
+&lt;p>The motivation for that comes not only to assert that the APIs work as expected, but also to keep their behavior stable across minor changes in their code, which can allow for great improvement to the code readability and maintainability.&lt;/p>
+&lt;p>For the implementation of the tests, &lt;em>we&lt;/em> decided to go with the Kernel Unit Testing Framework (KUnit). KUnit makes it possible to run test suites on kernel boot or load the tests as a module. It reports all test case results through a TAP (Test Anything Protocol) in the kernel log.&lt;/p>
+&lt;p>There is a great probability that KUnit will have some limitations in regards to testing GPU’s drivers’ functions, so the secondary goal will be to enhance its capabilities. There will be other people working with KUnit on DCN in parallel, so there will be a lot of code review to be done as well. I will keep track of my weekly progress on my blog, reporting the challenges I will face and trying to create an introductory material that could help future newcomers.&lt;/p>
+&lt;h1 id="mentors-and-teammates">
+Mentors and Teammates
+&lt;a class="heading-link" href="#mentors-and-teammates">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>During this &lt;em>summer&lt;/em> I&amp;rsquo;ll have by my side &lt;a href="https://crosscat.me">Isabella Basso&lt;/a> and &lt;a href="https://mairacanal.github.io">Maíra Canal&lt;/a>, sharing an overall similar GSOC proposal but working with DCN, which is used by newer GPUs, and &lt;a href="https://magalilemes.github.io/">Magali Lemes&lt;/a>, working on her related capstone project. We all will be mentored by three awesome FLOSS contributors:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://andrealmeid.com/">André &amp;ldquo;Tony&amp;rdquo; Almeida&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://melissawen.github.io/">Melissa Wen&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://siqueira.tech/">Rodrigo Siqueira&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="community">
+Community
+&lt;a class="heading-link" href="#community">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>When talking about FLOSS, communication must be plenty &lt;em>and time-travel compatible&lt;/em> 🙃!&lt;/p>
+&lt;p>Jokes aside, the two main channels to chat and exchange &lt;em>patches&lt;/em> are IRC and mailing lists, respectively.&lt;/p>
+&lt;h2 id="mailing-lists">
+Mailing Lists
+&lt;a class="heading-link" href="#mailing-lists">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>Right now, I&amp;rsquo;m still overwhelmed by the volume of emails arriving (even after setting some filters). Searching for relevant threads at &lt;a href="https://lore.kernel.org">lore.kernel.org&lt;/a> has proven useful. Right now, I&amp;rsquo;m subscribed to:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://lists.freedesktop.org/mailman/listinfo/dri-devel">DRI-Devel&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://lists.freedesktop.org/mailman/listinfo/amd-gfx">AMD-GFX&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://groups.google.com/g/kunit-dev">Kunit-dev&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="irc-channels">
+IRC channels
+&lt;a class="heading-link" href="#irc-channels">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>IRC is an important tool used by the community to keep in touch &lt;em>real time&lt;/em>. Similar to old-school chat rooms, there&amp;rsquo;s no chat history by default, so, to circumvent that, I&amp;rsquo;ve been using &lt;a href="https://thelounge.chat/">thelounge&lt;/a> kindly deployed by André, which acts not only as an &lt;em>IRC web client&lt;/em> but also a &lt;em>IRC bouncer&lt;/em>, meaning that it keeps me connected and stores any messages while I&amp;rsquo;m away.&lt;/p>
+&lt;p>I&amp;rsquo;ve joined the following IRC channels:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>#kunit-usp&lt;/code>: Where daily discussions from our team are being held, in portuguese.&lt;/li>
+&lt;li>&lt;code>#kunit&lt;/code>: &lt;a href="https://kunit.dev/">Kunit&lt;/a> development channel.&lt;/li>
+&lt;li>&lt;code>#kw-devel&lt;/code>: &lt;a href="kworkflow.org/">Kworkflow&lt;/a> development channel.&lt;/li>
+&lt;li>&lt;code>#dri-devel&lt;/code>: Pretty active channel shared by Mesa and Kernel graphics (filled with light hearted people, highly recommend!).&lt;/li>
+&lt;li>&lt;code>#freedesktop&lt;/code>: &lt;a href="https://www.freedesktop.org">freedesktop.org&lt;/a> infrastructure and online services.&lt;/li>
+&lt;li>&lt;code>#radeon&lt;/code>: Support and development for open-source radeon/amdgpu drivers.&lt;/li>
+&lt;li>&lt;code>#xorg-devel&lt;/code>: &lt;a href="https://www.x.org/">X.Org&lt;/a> development discussion.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&amp;ldquo;Happy Birthday Penguin Cake&amp;rdquo; by foamcow is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit &lt;a href="https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse">https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse&lt;/a>.&lt;/p></description></item><item><title>How to use the GitLab API</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</link><pubDate>Fri, 07 Jan 2022 19:45:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</guid><description>&lt;h1 id="how-to-use-the-gitlab-api">
+How to Use the GitLab API
+&lt;a class="heading-link" href="#how-to-use-the-gitlab-api">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>Sometimes, when you don&amp;rsquo;t use a monorepo, it may be necessary to handle multiple repositories at once.
+GitLab provides an easy way to do that, even with a free account!
+All you have to do is find what you need in their &lt;a href="https://docs.gitlab.com/ee/api/">documentation&lt;/a>.&lt;/p>
+&lt;p>The first step, is to create an access token, for that go to the &lt;a href="https://gitlab.com/-/profile">profile&lt;/a> page
+and find the &lt;a href="https://gitlab.com/-/profile/personal_access_tokens">Access Tokens&amp;rsquo; settings&lt;/a>.
+There you&amp;rsquo;ll be able to create a new token, with a configurable permission scope and expiration date.&lt;/p>
+&lt;p>Lets say, for example, that you want to clone every repository from the group &lt;strong>ID: 3253154&lt;/strong>.&lt;/p>
+&lt;p>&lt;img src="https://tales-aparecida.github.io/tales-tips-and-tricks/tales-tips-and-tricks/images/gitlab-group-id.png" alt="GitLab Group ID: 3253154">&lt;/p>
+&lt;p>To do that you can use the &lt;a href="https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects">&amp;ldquo;List a group&amp;rsquo;s projects&amp;rdquo;&lt;/a>,
+which can be achieved with a &lt;code>read_api&lt;/code> permission.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>curl --request GET --header &lt;span style="color:#e6db74">&amp;#34;PRIVATE-TOKEN: this-should-be-your-token&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://gitlab.com/api/v4/groups/&lt;/span>$PROJECT_ID&lt;span style="color:#e6db74">/projects?simple=true&amp;#34;&lt;/span> &amp;gt; /tmp/projects.json
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will save a JSON with the ID, URL, name, and path of each project.
+You can use Python to handle it and print the SSH urls to clone, like so:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">with&lt;/span> open(&lt;span style="color:#e6db74">&amp;#39;/tmp/projects.json&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">as&lt;/span> fp:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> group_info &lt;span style="color:#f92672">=&lt;/span> json&lt;span style="color:#f92672">.&lt;/span>load(fp)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> project_info &lt;span style="color:#f92672">in&lt;/span> group_info:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;git clone&amp;#34;&lt;/span>, project_info[&lt;span style="color:#e6db74">&amp;#39;ssh_url_to_repo&amp;#39;&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also use &lt;code>subprocess.run()&lt;/code> to clone them.&lt;/p>
+&lt;p>If you want to, you can even make requests using Python directly,
+for example, to update every projects&amp;rsquo; Merge Request settings to use merge commits and forbid squash:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>token &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;this-should-be-your-token&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> project_info &lt;span style="color:#f92672">in&lt;/span> group_info:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> requests&lt;span style="color:#f92672">.&lt;/span>put(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#39;https://gitlab.com/api/v4/projects/&lt;/span>&lt;span style="color:#e6db74">{&lt;/span>project_info[&lt;span style="color:#e6db74">&amp;#39;id&amp;#39;&lt;/span>]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> headers&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#e6db74">&amp;#39;PRIVATE-TOKEN&amp;#39;&lt;/span>:token},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#e6db74">&amp;#39;merge_method&amp;#39;&lt;/span>:&lt;span style="color:#e6db74">&amp;#39;merge&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;squash_option&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;never&amp;#39;&lt;/span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That&amp;rsquo;s it. There&amp;rsquo;s plenty more in their documentation, as I&amp;rsquo;ve said before, be creative and let your problems guide you.&lt;/p></description></item><item><title>How to setup your own website powered by Hugo</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</link><pubDate>Tue, 29 Jun 2021 16:23:24 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-hugo/</guid><description>&lt;h1 id="what-is-hugo">
+What is Hugo
+&lt;a class="heading-link" href="#what-is-hugo">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;blockquote>
+&lt;p>Hugo is a static HTML and CSS website generator written in &lt;a href="https://golang.org/">Go&lt;/a>. It is optimized for speed, ease of use, and configurability. Hugo takes a directory with content and templates and renders them into a full HTML website.&lt;/p>
+&lt;p>src: &lt;a href="https://github.com/gohugoio/hugo">https://github.com/gohugoio/hugo&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>Or, in my case, it&amp;rsquo;s a tool that allowed me to setup my own blog, writing posts using Markdown and github.io for hosting.&lt;/p>
+&lt;p>You can follow their &lt;a href="https://gohugo.io/getting-started/quick-start/">tutorial&lt;/a> to setup your static website too! Trust me, it&amp;rsquo;s pretty straight forward, just:&lt;/p>
+&lt;ol>
+&lt;li>&lt;a href="https://gohugo.io/getting-started/installing/">Install Hugo&lt;/a>&lt;/li>
+&lt;li>Create a new site with: &lt;code>hugo new site NAME_HERE&lt;/code>&lt;/li>
+&lt;li>Add and customize a theme (there are dozens of options!)&lt;/li>
+&lt;li>Add some content&lt;/li>
+&lt;li>Check your workings&lt;/li>
+&lt;li>Publish!&lt;/li>
+&lt;/ol>
+&lt;h1 id="add-and-customize-a-theme">
+Add and customize a theme
+&lt;a class="heading-link" href="#add-and-customize-a-theme">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>Hugo community has created many (almost 300 up until now) beautiful themes. You can choose one at their &lt;a href="themes.gohugo.io/">gallery&lt;/a>. Each one has its own set of customizations, which you can usually find more about in their GitHub page.&lt;/p>
+&lt;p>This site, the one you are reading right now, uses &lt;a href="https://github.com/luizdepra/hugo-coder/">Hugo-Coder&lt;/a> as its theme, created by &lt;a href="https://github.com/luizdepra">Luiz de Prá&lt;/a>, which needed no effort besides cloning as a submodule with &lt;code>git submodule add https://github.com/luizdepra/hugo-coder.git themes/hugo-coder&lt;/code> and setting a &lt;code>config.toml&lt;/code> file, which you may copy &lt;a href="https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/config.toml">from my repo&lt;/a>.&lt;/p>
+&lt;p>&lt;img src="https://github.com/luizdepra/hugo-coder/raw/main/images/screenshot.png" alt="Hugo-coder home page">&lt;/p>
+&lt;h1 id="add-some-content">
+Add some content
+&lt;a class="heading-link" href="#add-some-content">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>In this step you will need to run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>hugo new posts/my-first-post.md
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And then fill the &lt;a href="https://www.markdownguide.org/">markdown&lt;/a> file with your own ideas!&lt;/p>
+&lt;p>Note that Hugo posts have a header called &amp;ldquo;&lt;a href="https://gohugo.io/content-management/front-matter">Front Matter&lt;/a>&amp;rdquo;, a section at the top of the file in &lt;a href="https://gohugo.io/content-management/front-matter#front-matter-formats">4 different possible formats&lt;/a> where you can set attributes about your post, like &lt;code>title&lt;/code>, &lt;code>description&lt;/code>, &lt;code>date&lt;/code> and &lt;code>tags&lt;/code>.&lt;/p>
+&lt;h1 id="check-your-workings">
+Check your workings
+&lt;a class="heading-link" href="#check-your-workings">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>To visualize your website in a browser, run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>hugo server -D
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If there aren&amp;rsquo;t any errors, this should print something like:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>Start building sites …
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> | EN
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-------------------+-----
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Pages | 26
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Paginator pages | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Non-page files | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Static files | 5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Processed images | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Aliases | 10
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Sitemaps | 1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Cleaned | 0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Built in 79 ms
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Watching for changes in /home/tales/codes/tales-tips-and-tricks/{archetypes,content,data,layouts,static,themes}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Watching for config changes in /home/tales/codes/tales-tips-and-tricks/config.toml, /home/tales/codes/tales-tips-and-tricks/themes/hugo-coder/config.toml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Environment: &amp;#34;development&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Serving pages from memory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Press Ctrl+C to stop
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which, if you read it carefully, tells that your website can be accessed through http://localhost:1313.&lt;/p>
+&lt;h1 id="publish">
+Publish
+&lt;a class="heading-link" href="#publish">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>At last, to publish your new static website there are some &lt;a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">alternatives&lt;/a>, the one I&amp;rsquo;ve chosen was &lt;a href="https://help.github.com/articles/what-is-github-pages/">GitHub Pages&lt;/a> hosted on GitHub&amp;rsquo;s github.io domain, using GitHub Actions.&lt;/p>
+&lt;p>You just need to create a branch &amp;ldquo;gh-pages&amp;rdquo; then go to the repository settings and activate it as the source to your website.&lt;/p>
+&lt;p>&lt;img src="https://tales-aparecida.github.io/tales-tips-and-tricks/tales-tips-and-tricks/images/gh-pages.png" alt="Activate GitHub Page in the repo settings">&lt;/p>
+&lt;p>Then, create a &lt;code>.github/workflows/gh-pages.yml&lt;/code> in your main branch to setup the GitHub Actions pipeline, which will build the statics into the &lt;code>gh-pages&lt;/code> branch, you can copy my &lt;a href="https://github.com/tales-aparecida/tales-tips-and-tricks/blob/main/.github/workflows/gh-pages.yml">&lt;code>gh-pages.yml&lt;/code>&lt;/a> if you want to, which I got from &lt;a href="https://github.com/peaceiris/actions-hugo">https://github.com/peaceiris/actions-hugo&lt;/a>.&lt;/p>
+&lt;p>That&amp;rsquo;s it, in your next &lt;code>git push&lt;/code> you will trigger the deploy and your website will be accessible through the URL informed while activating the GitHub Pages. :D&lt;/p>
+&lt;h2 id="userorganization-page-vs-repository-page">
+User/Organization page vs Repository page
+&lt;a class="heading-link" href="#userorganization-page-vs-repository-page">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>You&amp;rsquo;ll notice that the URL hosting your website looks something like: &lt;code>https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/&lt;/code>.
+To fix that, either rename your repository to &lt;code>YOUR-USERNAME.github.io&lt;/code> or create a repository with that name with a page responsible for redirecting into the correct path.
+In that case, you just need to activate the GitHub Pages in the new repo and add the file &lt;code>index.html&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">charset&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;utf-8&amp;#34;&lt;/span>/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">title&lt;/span>&amp;gt;Redirecting...&amp;lt;/&lt;span style="color:#f92672">title&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- Redirects to the correct GitHub Pages path in 0 seconds --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">http-equiv&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;refresh&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">content&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;0; URL=&amp;#39;/YOUR-REPO-NAME/&amp;#39;&amp;#34;&lt;/span>/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="alternatives">
+Alternatives
+&lt;a class="heading-link" href="#alternatives">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>If Hugo didn&amp;rsquo;t spark your interest, give a chance to &lt;a href="https://docs.github.com/pt/pages/setting-up-a-github-pages-site-with-jekyll">Jekyll&lt;/a>,
+the static website generator endorsed by GitHub.&lt;/p></description></item></channel></rss>

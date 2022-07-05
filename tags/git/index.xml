@@ -1,1 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/git/</link><description>Recent content in git on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Reviewing patches</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</link><pubDate>Mon, 27 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</guid><description>Let&amp;rsquo;s learn together how to apply community patches, test them and be part of the community.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/git/</link><description>Recent content in git on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Reviewing patches</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</link><pubDate>Mon, 27 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</guid><description>&lt;p>Being part of the community, is more than just writing code and sending patches, it is also keeping track of the IRC discussions and reading the mailing lists to &lt;strong>review&lt;/strong> and &lt;strong>test&lt;/strong> patches sent from others whenever you can.&lt;/p>
+&lt;p>Both environments are not the most welcoming, but there are plenty of tools from the &lt;em>community&lt;/em> to help parsing them. In this post I&amp;rsquo;ll talk about &lt;a href="https://github.com/mricon/b4">b4&lt;/a>, suggested by my GSOC mentor &lt;a href="http://andrealmeid.com/">André&lt;/a>, a tool to help with applying patches.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;h1 id="applying-patches">
+Applying patches
+&lt;a class="heading-link" href="#applying-patches">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>I assume you already know that when we refer to &amp;ldquo;git commits&amp;rdquo;, we are basically talking about snapshots of the files in the repository (&lt;a href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F">more about that&lt;/a>); it&amp;rsquo;s almost like, for each set of changes, we archived and compressed the whole repository folder an gave the result a name.&lt;/p>
+&lt;div class="notice example">
+&lt;div class="notice-title">
+&lt;i class="fa fa-file-text" aria-hidden="true">&lt;/i>Example
+&lt;/div>
+&lt;div class="notice-content">&lt;ul>
+&lt;li>v1-created-wireframes.tar.gz&lt;/li>
+&lt;li>v2-minimum-testable-product.tar.gz&lt;/li>
+&lt;li>v2.1-fixed-download-icon.tar.gz&lt;/li>
+&lt;li>v3&amp;hellip;&lt;/li>
+&lt;/ul>&lt;/div>
+&lt;/div>
+&lt;p>When working in a large project with so many people, like we have in the Linux Kernel community, it would be impractical to send a file containing the whole repository just to show some changes in some files, specially in the old days, when there probably wasn&amp;rsquo;t even that much bandwidth. So, in order to &lt;em>share your workings&lt;/em> with the community you just have to tell them &amp;ldquo;add X to line N, remove Y from the following line&amp;rdquo;, in other words, you have to share only the &lt;strong>differences&lt;/strong> you brought to the code.&lt;/p>
+&lt;p>There is a command to convert your commits into these messages showing only the &amp;ldquo;diffs&amp;rdquo; in your code: &lt;a href="https://git-scm.com/docs/git-format-patch">&lt;code>git format-patch&lt;/code>&lt;/a>. It&amp;rsquo;s worth mentioning that Git uses its own enhanced format of &lt;code>diff&lt;/code> (see &lt;a href="https://git-scm.com/docs/git-diff">&lt;code>git diff&lt;/code>&lt;/a>), which tries to humanize and contextualize some changes, either by recognizing scopes in some languages or simply including surrounding lines in the output. So, lets say you created &lt;em>a couple&lt;/em> commits based on &lt;a href="https://github.com/torvalds/linux">&lt;code>master&lt;/code>&lt;/a> and want to extract them as &lt;em>patches&lt;/em>, you could run &lt;code>git format-patch master&lt;/code>, which would create &lt;em>a couple&lt;/em> numbered files. You could then send them via email with &lt;a href="https://git-scm.com/docs/git-send-email">&lt;code>git send-mail&lt;/code>&lt;/a>, but that&amp;rsquo;s another talk, my point here was just to introduce the concept of patches, you can read more at &lt;a href="https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project">https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project&lt;/a>.&lt;/p>
+&lt;div class="notice note">
+&lt;div class="notice-title">
+&lt;i class="fa fa-sticky-note" aria-hidden="true">&lt;/i>Note
+&lt;/div>
+&lt;div class="notice-content">Nowadays there are plenty of source-code hosts, like Github and Gitlab, that provide an alternative to email patching through &lt;a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">Pull&lt;/a>/&lt;a href="https://docs.gitlab.com/ee/user/project/merge_requests/">Merge Request&lt;/a>.&lt;/div>
+&lt;/div>
+&lt;p>Now, lets say somebody has already sent their patch to some mailing list, like &lt;a href="https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/">https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/&lt;/a>. How can you assert that their code compiles and works as described?&lt;/p>
+&lt;p>You could find the link and download the &lt;code>mbox.gz&lt;/code> file from the &lt;a href="https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/">lore.kernel.org&lt;/a> page, or find the series at &lt;a href="https://patchwork.kernel.org/project/dri-devel/list/?series=654239">patchwork.kernel.org&lt;/a> to do the same, which then would allow you to use &lt;a href="https://git-scm.com/docs/git-am">&lt;code>git am&lt;/code>&lt;/a> to apply the patches, recreating the commits in your local environment. That process is easy enough but it can be improved as far as running a command over the &lt;code>lore.kernel.org&lt;/code> URL with &lt;a href="https://github.com/mricon/b4">&lt;code>b4&lt;/code>&lt;/a>.&lt;/p>
+&lt;div class="notice info">
+&lt;div class="notice-title">
+&lt;i class="fa fa-exclamation-circle" aria-hidden="true">&lt;/i>Info
+&lt;/div>
+&lt;div class="notice-content">B4 is a helper utility to work with patches made available via a public-inbox archive like lore.kernel.org. It is written to make it easier to participate in a patch-based workflows, like those used in the Linux kernel development.&lt;/div>
+&lt;/div>
+&lt;h1 id="b4---its-not-an-acronym-its-just-a-name">
+B4 - it&amp;rsquo;s not an acronym, it&amp;rsquo;s just a name
+&lt;a class="heading-link" href="#b4---its-not-an-acronym-its-just-a-name">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>&lt;strong>B4&lt;/strong> is a Python package and can be easily installed with &lt;code>python3 -m pip install --user b4&lt;/code>. I&amp;rsquo;d suggest using a &lt;a href="https://docs.python.org/pt-br/3/library/venv.html">virtual environment&lt;/a> to avoid problems with dependencies, but this post won&amp;rsquo;t cover that.&lt;/p>
+&lt;p>It comes with a helpful &lt;code>b4 --help&lt;/code>, which tells us that, to apply the mentioned patch series you&amp;rsquo;d just need to run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>b4 am https://lore.kernel.org/all/20220627161132.33256-1-jose.exposito89@gmail.com/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which will download the patch series as a mbox file and the cover letter as another, so that you could then use &lt;code>git am&lt;/code> on it the former. With some luck (and communication), everything will apply without any conflicts.&lt;/p>
+&lt;p>That&amp;rsquo;s it, good luck on your reviews and thanks for reading!&lt;/p>
+&lt;hr>
+&lt;p>&amp;ldquo;applying patch to belly&amp;rdquo; by The EnergySmart Academy is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit &lt;a href="https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse">https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse&lt;/a>.&lt;/p></description></item></channel></rss>

@@ -1,1 +1,100 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>amdgpu on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/amdgpu/</link><description>Recent content in amdgpu on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 12 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/amdgpu/index.xml" rel="self" type="application/rss+xml"/><item><title>Finding bugs using IGT and git bisect</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</link><pubDate>Sun, 12 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</guid><description>How to combine IGT GPU Tools with Git bisect to report an issue in the AMDGPU driver</description></item><item><title>My experience as a Google Summer of Code Contributor - Introduction</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</link><pubDate>Mon, 06 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</guid><description>I&amp;rsquo;ve been accepted as a GSOC contributor for X.Org! Let me tell you a bit about my project and the initial experience</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>amdgpu on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/amdgpu/</link><description>Recent content in amdgpu on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 12 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/amdgpu/index.xml" rel="self" type="application/rss+xml"/><item><title>Finding bugs using IGT and git bisect</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</link><pubDate>Sun, 12 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/</guid><description>&lt;p>The first step to eliminate bugs is to find a way how to reproduce them consistently. &lt;em>Wait&amp;hellip; what?&lt;/em>&lt;/p>
+&lt;p>Test suites are great for that, since they can simulate very specific behavior in a timely manner. &lt;a href="https://gitlab.freedesktop.org/drm/igt-gpu-tools">IGT GPU Tools&lt;/a> is a collection of tools for development and testing of the DRM drivers, and, as such, it can help us to find and reproduce bugs.&lt;/p>
+&lt;p>I intend to help expand the AMDGPU tests&amp;rsquo; list in my the &lt;a href="https://summerofcode.withgoogle.com/proposals/details/TKAqZe03">GSoC project&lt;/a>, so it made sense trying to run them right away. Cloned and built the IGT project then tried to run the &amp;ldquo;amdgpu&amp;rdquo; tests using a TTY in &lt;a href="https://ubuntuhandbook.org/index.php/2020/05/boot-ubuntu-20-04-command-console/">text mode&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ ./scripts/run-tests.sh -t &lt;span style="color:#e6db74">&amp;#34;.*amdgpu.*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Unfortunately, the tests failed and &lt;em>never came to a stop&lt;/em>. I tried interrupting the process using different techniques but, in the end, had to reboot pressing the Reset button. Looking through the partial results I found that one of the subtests of &lt;code>amd_cs_nop&lt;/code> was causing the problem&amp;hellip; But why weren&amp;rsquo;t the test just failing or crashing?&lt;/p>
+&lt;p>In an attempt to debug what was happening inside the subtest I enabled the DRM debugging messages with:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>echo 0x19F | sudo tee /sys/module/drm/parameters/debug
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This &lt;a href="https://01.org/linuxgraphics/gfx-docs/drm/gpu/drm-internals.html#c.drm_debug_category">mask&lt;/a> activates all debugging logs but &amp;ldquo;verbose vblank&amp;rdquo; and &amp;ldquo;verbose atomic state&amp;rdquo;. Unfortunately, again, this debugging logs only managed to show me, with my limited knowledge, that &lt;em>something&lt;/em> had been locked in an infinite loop.&lt;/p>
+&lt;div class="notice tip">
+&lt;div class="notice-title">
+&lt;i class="fa fa-lightbulb-o" aria-hidden="true">&lt;/i>Tip
+&lt;/div>
+&lt;div class="notice-content">Ask for help!&lt;/div>
+&lt;/div>
+&lt;p>After sharing my experience with my mentors, they assured me the problem was &lt;em>probably&lt;/em> caused by the kernel code itself, not with my setup or my compilation &lt;code>.config&lt;/code>. So, to pinpoint what part of the code was causing the problem I could look through space (stepping throughout the calls with &lt;strong>gdb&lt;/strong>) or time (using &lt;strong>git&lt;/strong>) and I choose the latter.&lt;/p>
+&lt;p>So now the plan was to find when the bug was introduced. Luckily it wasn&amp;rsquo;t so hard, a single &lt;code>git checkout&lt;/code> to the previous release in the &lt;a href="git@gitlab.freedesktop.org:agd5f/linux.git">&lt;code>amd-staging-drm-next&lt;/code>&lt;/a> branch, which was &lt;code>v5.16&lt;/code>, only 1000 commits or so behind the HEAD of the branch. It might seem like a lot to go through, but our time-machine is quite fast: &lt;a href="https://git-scm.com/docs/git-bisect">&lt;code>git bisect&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>According to Wikipedia, the &lt;a href="https://en.wikipedia.org/wiki/Bisection_method">bisection method&lt;/a> is a root-finding method that applies to any continuous function for which one knows two values with opposite signs. You probably already know it as binary-search. In this case, we are searching for the first commit in which the test fails, so to start our journey&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git bisect start
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git bisect bad &lt;span style="color:#75715e"># HEAD&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git bisect good v5.16
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And with it, &lt;code>git&lt;/code> informs us there will be around 10 steps and checks out to the middle of those commits. For each step, build, deploy, reboot into the new kernel and run tests. Quite tedious and time consuming. Right now, I&amp;rsquo;m not sure I could do it in a QEMU environment, but certainly, if I ever need to bisect the kernel in the future I&amp;rsquo;ll look into it, because in that case I would be able to use &lt;code>git bisect run&lt;/code>, which would allow the whole process to be automatized.&lt;/p>
+&lt;div class="notice tip">
+&lt;div class="notice-title">
+&lt;i class="fa fa-lightbulb-o" aria-hidden="true">&lt;/i>Tip
+&lt;/div>
+&lt;div class="notice-content">Always read the &lt;strong>build&lt;/strong> result before &lt;strong>deploying&lt;/strong>.&lt;/div>
+&lt;/div>
+&lt;p>In the end, the whole process took a full afternoon&amp;hellip; just to find myself in a failed bisection. I had the misfortune of making some mistake in the middle of the road, probably skipping the &lt;em>build&lt;/em> step by accident due to a compiling error, and marked a commit with the wrong flag. After restarting the bisect in the following day, I made sure to avoid my mistake be renaming each build with the short hash of the commit I was compiling. And finally 🎉, found the first broken commit: &lt;a href="https://gitlab.freedesktop.org/agd5f/linux/-/commit/e68efb27647f2106d6b545667f35b2ea39746b57">https://gitlab.freedesktop.org/agd5f/linux/-/commit/e68efb27647f2106d6b545667f35b2ea39746b57&lt;/a>&lt;/p>
+&lt;p>Well&amp;hellip; at least, I found the commit where the &lt;code>amd_cs_nop&lt;/code> started failing. It looks promising, given it handles a mutex lock, and my mentors think so as well. Next step was reporting the bug, by simply creating an issue following the &amp;ldquo;BUG template&amp;rdquo; given at &lt;a href="https://gitlab.freedesktop.org/drm/amd/-/issues/">https://gitlab.freedesktop.org/drm/amd/-/issues/&lt;/a>:&lt;/p>
+&lt;div class="notice info">
+&lt;div class="notice-title">
+&lt;i class="fa fa-exclamation-circle" aria-hidden="true">&lt;/i>Info
+&lt;/div>
+&lt;div class="notice-content">&lt;a href="https://gitlab.freedesktop.org/drm/amd/-/issues/2048">https://gitlab.freedesktop.org/drm/amd/-/issues/2048&lt;/a>&lt;/div>
+&lt;/div>
+&lt;p>And that&amp;rsquo;s that. Thanks for reading. ❤️&lt;/p>
+&lt;hr>
+&lt;p>&amp;ldquo;Repair Bug&amp;rdquo; by AZRainman is licensed under CC BY 2.0. To view a copy of this license, visit &lt;a href="https://creativecommons.org/licenses/by/2.0/?ref=openverse">https://creativecommons.org/licenses/by/2.0/?ref=openverse&lt;/a>.&lt;/p></description></item><item><title>My experience as a Google Summer of Code Contributor - Introduction</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</link><pubDate>Mon, 06 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-1/</guid><description>&lt;p>So it begins!&lt;/p>
+&lt;p>With some pushes and pulls from friends, I&amp;rsquo;ve been studying the Linux Graphical stack for some time now. After some minor patches to both &lt;a href="https://gitlab.freedesktop.org/mesa/mesa">Mesa&lt;/a> and the &lt;a href="https://lore.kernel.org/all/?q=tales.aparecida@gmail.com">Linux Kernel&lt;/a>, I followed the &lt;a href="https://summerofcode.withgoogle.com/programs/2022/organizations/xorg-foundation">instructions&lt;/a> thoroughly and landed a successful &lt;a href="https://summerofcode.withgoogle.com/proposals/details/TKAqZe03">Google Summer of Code proposal&lt;/a>:&lt;/p>
+&lt;h1 id="introduce-unit-tests-to-the-amdgpu-dce-component">
+Introduce Unit Tests to the AMDGPU “DCE” Component
+&lt;a class="heading-link" href="#introduce-unit-tests-to-the-amdgpu-dce-component">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>My project’s primary goal is to create unit tests using KUnit for the AMDGPU driver focused on the Display and Compositing Engine (DCE) 11.2, which will be tested on the GPU “RX 580”.&lt;/p>
+&lt;p>The motivation for that comes not only to assert that the APIs work as expected, but also to keep their behavior stable across minor changes in their code, which can allow for great improvement to the code readability and maintainability.&lt;/p>
+&lt;p>For the implementation of the tests, &lt;em>we&lt;/em> decided to go with the Kernel Unit Testing Framework (KUnit). KUnit makes it possible to run test suites on kernel boot or load the tests as a module. It reports all test case results through a TAP (Test Anything Protocol) in the kernel log.&lt;/p>
+&lt;p>There is a great probability that KUnit will have some limitations in regards to testing GPU’s drivers’ functions, so the secondary goal will be to enhance its capabilities. There will be other people working with KUnit on DCN in parallel, so there will be a lot of code review to be done as well. I will keep track of my weekly progress on my blog, reporting the challenges I will face and trying to create an introductory material that could help future newcomers.&lt;/p>
+&lt;h1 id="mentors-and-teammates">
+Mentors and Teammates
+&lt;a class="heading-link" href="#mentors-and-teammates">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>During this &lt;em>summer&lt;/em> I&amp;rsquo;ll have by my side &lt;a href="https://crosscat.me">Isabella Basso&lt;/a> and &lt;a href="https://mairacanal.github.io">Maíra Canal&lt;/a>, sharing an overall similar GSOC proposal but working with DCN, which is used by newer GPUs, and &lt;a href="https://magalilemes.github.io/">Magali Lemes&lt;/a>, working on her related capstone project. We all will be mentored by three awesome FLOSS contributors:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://andrealmeid.com/">André &amp;ldquo;Tony&amp;rdquo; Almeida&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://melissawen.github.io/">Melissa Wen&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://siqueira.tech/">Rodrigo Siqueira&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="community">
+Community
+&lt;a class="heading-link" href="#community">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>When talking about FLOSS, communication must be plenty &lt;em>and time-travel compatible&lt;/em> 🙃!&lt;/p>
+&lt;p>Jokes aside, the two main channels to chat and exchange &lt;em>patches&lt;/em> are IRC and mailing lists, respectively.&lt;/p>
+&lt;h2 id="mailing-lists">
+Mailing Lists
+&lt;a class="heading-link" href="#mailing-lists">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>Right now, I&amp;rsquo;m still overwhelmed by the volume of emails arriving (even after setting some filters). Searching for relevant threads at &lt;a href="https://lore.kernel.org">lore.kernel.org&lt;/a> has proven useful. Right now, I&amp;rsquo;m subscribed to:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://lists.freedesktop.org/mailman/listinfo/dri-devel">DRI-Devel&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://lists.freedesktop.org/mailman/listinfo/amd-gfx">AMD-GFX&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://groups.google.com/g/kunit-dev">Kunit-dev&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="irc-channels">
+IRC channels
+&lt;a class="heading-link" href="#irc-channels">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>IRC is an important tool used by the community to keep in touch &lt;em>real time&lt;/em>. Similar to old-school chat rooms, there&amp;rsquo;s no chat history by default, so, to circumvent that, I&amp;rsquo;ve been using &lt;a href="https://thelounge.chat/">thelounge&lt;/a> kindly deployed by André, which acts not only as an &lt;em>IRC web client&lt;/em> but also a &lt;em>IRC bouncer&lt;/em>, meaning that it keeps me connected and stores any messages while I&amp;rsquo;m away.&lt;/p>
+&lt;p>I&amp;rsquo;ve joined the following IRC channels:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>#kunit-usp&lt;/code>: Where daily discussions from our team are being held, in portuguese.&lt;/li>
+&lt;li>&lt;code>#kunit&lt;/code>: &lt;a href="https://kunit.dev/">Kunit&lt;/a> development channel.&lt;/li>
+&lt;li>&lt;code>#kw-devel&lt;/code>: &lt;a href="kworkflow.org/">Kworkflow&lt;/a> development channel.&lt;/li>
+&lt;li>&lt;code>#dri-devel&lt;/code>: Pretty active channel shared by Mesa and Kernel graphics (filled with light hearted people, highly recommend!).&lt;/li>
+&lt;li>&lt;code>#freedesktop&lt;/code>: &lt;a href="https://www.freedesktop.org">freedesktop.org&lt;/a> infrastructure and online services.&lt;/li>
+&lt;li>&lt;code>#radeon&lt;/code>: Support and development for open-source radeon/amdgpu drivers.&lt;/li>
+&lt;li>&lt;code>#xorg-devel&lt;/code>: &lt;a href="https://www.x.org/">X.Org&lt;/a> development discussion.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&amp;ldquo;Happy Birthday Penguin Cake&amp;rdquo; by foamcow is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit &lt;a href="https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse">https://creativecommons.org/licenses/by-nc-sa/2.0/?ref=openverse&lt;/a>.&lt;/p></description></item></channel></rss>

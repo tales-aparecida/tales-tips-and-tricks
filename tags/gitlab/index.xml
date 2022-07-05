@@ -1,1 +1,37 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gitlab on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/gitlab/</link><description>Recent content in gitlab on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 07 Jan 2022 19:45:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/gitlab/index.xml" rel="self" type="application/rss+xml"/><item><title>How to use the GitLab API</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</link><pubDate>Fri, 07 Jan 2022 19:45:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</guid><description>An introduction to GitLab&amp;rsquo;s API for when you have to handle too many repositories at once</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gitlab on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/tags/gitlab/</link><description>Recent content in gitlab on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 07 Jan 2022 19:45:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/tags/gitlab/index.xml" rel="self" type="application/rss+xml"/><item><title>How to use the GitLab API</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</link><pubDate>Fri, 07 Jan 2022 19:45:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/how-to-use-gitlab-api/</guid><description>&lt;h1 id="how-to-use-the-gitlab-api">
+How to Use the GitLab API
+&lt;a class="heading-link" href="#how-to-use-the-gitlab-api">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>Sometimes, when you don&amp;rsquo;t use a monorepo, it may be necessary to handle multiple repositories at once.
+GitLab provides an easy way to do that, even with a free account!
+All you have to do is find what you need in their &lt;a href="https://docs.gitlab.com/ee/api/">documentation&lt;/a>.&lt;/p>
+&lt;p>The first step, is to create an access token, for that go to the &lt;a href="https://gitlab.com/-/profile">profile&lt;/a> page
+and find the &lt;a href="https://gitlab.com/-/profile/personal_access_tokens">Access Tokens&amp;rsquo; settings&lt;/a>.
+There you&amp;rsquo;ll be able to create a new token, with a configurable permission scope and expiration date.&lt;/p>
+&lt;p>Lets say, for example, that you want to clone every repository from the group &lt;strong>ID: 3253154&lt;/strong>.&lt;/p>
+&lt;p>&lt;img src="https://tales-aparecida.github.io/tales-tips-and-tricks/tales-tips-and-tricks/images/gitlab-group-id.png" alt="GitLab Group ID: 3253154">&lt;/p>
+&lt;p>To do that you can use the &lt;a href="https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects">&amp;ldquo;List a group&amp;rsquo;s projects&amp;rdquo;&lt;/a>,
+which can be achieved with a &lt;code>read_api&lt;/code> permission.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>curl --request GET --header &lt;span style="color:#e6db74">&amp;#34;PRIVATE-TOKEN: this-should-be-your-token&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://gitlab.com/api/v4/groups/&lt;/span>$PROJECT_ID&lt;span style="color:#e6db74">/projects?simple=true&amp;#34;&lt;/span> &amp;gt; /tmp/projects.json
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will save a JSON with the ID, URL, name, and path of each project.
+You can use Python to handle it and print the SSH urls to clone, like so:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">with&lt;/span> open(&lt;span style="color:#e6db74">&amp;#39;/tmp/projects.json&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">as&lt;/span> fp:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> group_info &lt;span style="color:#f92672">=&lt;/span> json&lt;span style="color:#f92672">.&lt;/span>load(fp)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> project_info &lt;span style="color:#f92672">in&lt;/span> group_info:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;git clone&amp;#34;&lt;/span>, project_info[&lt;span style="color:#e6db74">&amp;#39;ssh_url_to_repo&amp;#39;&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also use &lt;code>subprocess.run()&lt;/code> to clone them.&lt;/p>
+&lt;p>If you want to, you can even make requests using Python directly,
+for example, to update every projects&amp;rsquo; Merge Request settings to use merge commits and forbid squash:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>token &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;this-should-be-your-token&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> project_info &lt;span style="color:#f92672">in&lt;/span> group_info:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> requests&lt;span style="color:#f92672">.&lt;/span>put(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#39;https://gitlab.com/api/v4/projects/&lt;/span>&lt;span style="color:#e6db74">{&lt;/span>project_info[&lt;span style="color:#e6db74">&amp;#39;id&amp;#39;&lt;/span>]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> headers&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#e6db74">&amp;#39;PRIVATE-TOKEN&amp;#39;&lt;/span>:token},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#e6db74">&amp;#39;merge_method&amp;#39;&lt;/span>:&lt;span style="color:#e6db74">&amp;#39;merge&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;squash_option&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;never&amp;#39;&lt;/span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That&amp;rsquo;s it. There&amp;rsquo;s plenty more in their documentation, as I&amp;rsquo;ve said before, be creative and let your problems guide you.&lt;/p></description></item></channel></rss>
