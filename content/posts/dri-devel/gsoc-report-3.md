@@ -9,19 +9,22 @@ tags = ['gsoc', 'kernel', 'kunit', 'git']
 featuredImage = "/images/mail-boxes.jpg"
 +++
 
-# How to write and run KUnit tests
+In a system like the Linux Kernel, with thousands of files with an ever-growing number of target devices, unit tests can provide a safety net against regressions, which itself can help newcomers feel comfortable suggesting changes, knowing full-well they won't be breaking related code.
+[KUnit](https://kunTit.dev/index.html) is one of the Linux Kernel unit testing frameworks, and in this post I'll walk you through the process of writing, running and trying to upstream unit tests using it.
 
-Let's learn together how to write, run and upstream unit tests for the Linux Kernel using KUnit.
+<!-- more -->
 
 ## KUnit
 
-[KUnit](https://kunit.dev/index.html) is one of the Linux Kernel unit testing frameworks. Its tests are part of the kernel, written in the C language, and test parts of the Kernel implementation, for example: file system, system calls, memory management, device drivers and so on. If you are interested in testing user APIs, [kselftest](https://docs.kernel.org/dev-tools/kselftest.html) is probably a better choice. 
+KUnit follows the white-box testing approach, that is, the tests are written with knowledge of internal system functionality. KUnit runs in kernel space and is not restricted to things exposed to user-space, its tests are written in the C language and _assert_ that Kernel components work as expected, for example: file system, system calls, memory management, device drivers and so on. If you are interested in testing user APIs, [kselftest](https://docs.kernel.org/dev-tools/kselftest.html) is probably a better choice.
 
-KUnit follows the white-box testing approach, that is, the tests are written with knowledge of internal system functionality. KUnit runs in kernel space and is not restricted to things exposed to user-space. 
-
-### Running
+### Running Tests
 
 Running is quite simple, you just need to have a compilable Kernel code in your workspace and then run `python ./tools/testing/kunit/kunit.py run`. This should compile and run the whole available test suite.
+
+## Writing tests
+
+
 
 # References
 
