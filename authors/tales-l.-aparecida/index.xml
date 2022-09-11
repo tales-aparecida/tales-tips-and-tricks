@@ -1,4 +1,363 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tales L. Aparecida on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/authors/tales-l.-aparecida/</link><description>Recent content in Tales L. Aparecida on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 12:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/authors/tales-l.-aparecida/index.xml" rel="self" type="application/rss+xml"/><item><title>Reviewing patches</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</link><pubDate>Mon, 27 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</guid><description>&lt;p>Being part of the community, is more than just writing code and sending patches, it is also keeping track of the IRC discussions and reading the mailing lists to &lt;strong>review&lt;/strong> and &lt;strong>test&lt;/strong> patches sent from others whenever you can.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tales L. Aparecida on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/authors/tales-l.-aparecida/</link><description>Recent content in Tales L. Aparecida on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 11 Sep 2022 18:15:00 +0100</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/authors/tales-l.-aparecida/index.xml" rel="self" type="application/rss+xml"/><item><title>GSoC 2022 Final Report</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/gsoc-final-report/</link><pubDate>Sun, 11 Sep 2022 18:15:00 +0100</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/gsoc-final-report/</guid><description>&lt;p>So here we have it, the end of my Google Summer of Code journey.
+A few more than a hundred days have passed, and I can already tell that the
+seeds have been sown for me to keep collaborating with open source software
+from here on out.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>My project’s primary goal was to create unit tests using KUnit for the AMDGPU
+driver focusing on code used by GPUs from the same generation of the GPU
+“RX 580” (DCE 11.2). We predicted that KUnit would have some limitations in
+regards to testing GPU’s drivers, so we expected to see some collaboration in
+that sense. Finally, we knew that I would be working in parallel with people
+writing tests for newer generations of GPUs (DCN). I planned to keep track of
+my weekly progress in my blog, trying to create an introductory material that
+could help future newcomers.&lt;/p>
+&lt;p>For starters, this project was completely different from what I had in mind,
+given that it was far from an individual experience with the Linux Kernel community;
+it was actually a team effort to introduce unit testing to the AMD display driver
+in a way that would encourage the community to spread KUnit into other GPU drivers.&lt;/p>
+&lt;p>Other surprise was how the unit tests didn&amp;rsquo;t really interact with the GPU,
+so all our worries about needing to mock devices, and intentions of writing
+about it, were put aside.&lt;/p>
+&lt;p>In retrospect, there&amp;rsquo;s still a lot to learn about the AMD codebase and graphics
+stack in general, but there are also many things that I&amp;rsquo;ve learned and didn&amp;rsquo;t
+manage to share yet, about IGT, KUnit, and the email-patch workflow, which I&amp;rsquo;ll
+be writing in my personal blog in addition to the pair of posts there:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/">Reviewing patches&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-2/">Finding bugs using IGT and git bisect&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>I&amp;rsquo;ve also dedicated some time reviewing the posts from my colleagues as well, like:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://gitlab.com/flusp/flusp.gitlab.io/-/merge_requests/102">Isabella&amp;rsquo;s post about graphics&amp;rsquo; stack&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://gitlab.com/flusp/flusp.gitlab.io/-/merge_requests/115">Maíra&amp;rsquo;s post about symbols&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://gitlab.com/flusp/flusp.gitlab.io/-/merge_requests/119">Magali&amp;rsquo;s post about rendering test coverage&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="introducing-kunit-test-into-amdgpu">
+Introducing Kunit test into AMDGPU
+&lt;a class="heading-link" href="#introducing-kunit-test-into-amdgpu">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>Our patch series is still under review:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://lore.kernel.org/dri-devel/20220831172239.344446-1-mairacanal@riseup.net/">drm/amd/display: Introduce KUnit to Display Mode Library&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>We have refactored this series many times before sending it, worrying about
+how the code should be organized and how the tests should be compiled.
+My biggest lesson was learning to &lt;em>let go&lt;/em>. Do your best to send great patches
+and reviews to the community, but don&amp;rsquo;t let the fear of being slightly wrong
+hold you back from pressing the submit button.&lt;/p>
+&lt;blockquote>
+&lt;p>Done is better than perfect!&lt;/p>
+&lt;/blockquote>
+&lt;p>I didn&amp;rsquo;t manage to write as many tests as I planned to the DCE11.2 functions,
+but for what it&amp;rsquo;s worth, I&amp;rsquo;m making sure that the KUnit documentation is up to
+date, so that anyone can write their own tests.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Patch&lt;/th>
+&lt;th>Status&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/amd-gfx/20220831172239.344446-2-mairacanal@riseup.net/">drm/amd/display: Introduce KUnit tests for fixed31_32 library&lt;/a>&lt;/td>
+&lt;td>Under review&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;ul>
+&lt;li>Co-developed: &lt;a href="https://lore.kernel.org/amd-gfx/20220831172239.344446-3-mairacanal@riseup.net/">drm/amd/display: Introduce KUnit tests to the bw_fixed library&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="contributing-to-floss-projects">
+Contributing to FLOSS projects
+&lt;a class="heading-link" href="#contributing-to-floss-projects">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>In my way to introducing unit tests to the AMD display driver I&amp;rsquo;ve managed to leave
+some impressions behind, writing small patches and reviewing code, listed in
+detail on the following sections.&lt;/p>
+&lt;h2 id="kworkflow">
+KWorkflow
+&lt;a class="heading-link" href="#kworkflow">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>&lt;a href="https://github.com/kworkflow/kworkflow">Kworflow&lt;/a> is a set of bash scripts that
+helped me to compile and deploy the kernel in my testing system,
+specially valuable to bisect code. In the beginning of my journey,
+shortly before the community bounding period, I sent a couple of patches to
+KWorkflow and reviewed a Pull Request.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Patch&lt;/th>
+&lt;th>Status&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/kworkflow/kworkflow/pull/592">#592 Add support for GPUs identified as &amp;ldquo;Display controller&amp;rdquo; in kw device&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/kworkflow/kworkflow/pull/607">#607 Enhance docs for kw-pomodoro and kw-report&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;ul>
+&lt;li>Reviewed &lt;a href="https://github.com/kworkflow/kworkflow/pull/606">#606 Fix large initramfs issue&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="igt">
+IGT
+&lt;a class="heading-link" href="#igt">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>&lt;a href="https://gitlab.freedesktop.org/drm/igt-gpu-tools">IGT GPU Tools&lt;/a> is a collection
+of tools for development and testing of the DRM drivers. One of my first tasks
+was to run the AMDGPU test suite using the GPU &amp;ldquo;RX580&amp;rdquo;. After checking with the
+community that my testing setup was correct, I reported a bug to the AMD issue
+tracker, with proper bisection, and followed it through the patching process:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Patch&lt;/th>
+&lt;th>Status&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://lists.freedesktop.org/archives/igt-dev/2022-August/044675.html">lib/igt_kmod: fix trivial typos&lt;/a>&lt;/td>
+&lt;td>Under review&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lists.freedesktop.org/archives/igt-dev/2022-August/044674.html">CONTRIBUTING: Add reference for GTKDoc&lt;/a>&lt;/td>
+&lt;td>Under review&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lists.freedesktop.org/archives/igt-dev/2022-August/044676.html">lib/kselftests: Skip kselftest when opening kmsg fails&lt;/a>&lt;/td>
+&lt;td>Under review&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lists.freedesktop.org/archives/igt-dev/2022-August/044677.html">lib/igt_kmod: add igt_kselftests documentation&lt;/a>&lt;/td>
+&lt;td>Under review&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;ul>
+&lt;li>Reported: &lt;a href="https://gitlab.freedesktop.org/drm/amd/-/issues/2048">&amp;ldquo;RX 580: igt@amdgpu/amd_cs_nop@fork-compute&amp;rdquo;&lt;/a>&lt;/li>
+&lt;li>Tested: &lt;a href="https://lore.kernel.org/amd-gfx/20220621144227.664800-1-luben.tuikov@amd.com/">Revert &amp;ldquo;drm/amdgpu: remove ctx-&amp;gt;lock&amp;rdquo;&lt;/a>&lt;/li>
+&lt;li>Tested: &lt;a href="https://gitlab.freedesktop.org/agd5f/linux/-/commit/90af0ca047f3049c4b46e902f432ad6ef1e2ded6">drm/amdgpu: Protect the amdgpu_bo_list list with a mutex v2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://gitlab.freedesktop.org/drm/amd/-/issues/2048#note_0983d9d9b8474d04219aa07a88b12f594baa3be5">Closed the Issue&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;h2 id="linux-kernel---kunit">
+Linux Kernel - KUnit
+&lt;a class="heading-link" href="#linux-kernel---kunit">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>&lt;a href="https://docs.kernel.org/dev-tools/kunit/">KUnit&lt;/a> is the Kernel Unit Testing Framework.
+It not only brings a way to facilitate writing tests to the kernel,
+but also running them using User Mode Linux or QEMU.
+For most of time in the project we were discussing how to organize tests in the AMD folders,
+and there were a lot of lessons from that, which I intend to share.
+I have a lot of documentation patches in their way, some may be worth squashing,
+but nonetheless, I have the intention to help making the KUnit documentation as clear as possible!&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Patch&lt;/th>
+&lt;th>Status&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220813042055.136832-2-tales.aparecida@gmail.com/">Documentation: kunit: fix trivial typo&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220813042055.136832-3-tales.aparecida@gmail.com/">Documentation: Kunit: Fix inconsistent titles&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220813042055.136832-4-tales.aparecida@gmail.com/">Documentation: KUnit: Fix non-uml anchor&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220813042055.136832-5-tales.aparecida@gmail.com/">Documentation: Kunit: Add ref for other kinds of tests&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-2-tales.aparecida@gmail.com/">Documentation: KUnit: remove duplicated docs for kunit_tool&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-3-tales.aparecida@gmail.com/">Documentation: KUnit: avoid repeating &amp;ldquo;kunit.py run&amp;rdquo; in start.rst&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-4-tales.aparecida@gmail.com/">Documentation: KUnit: add note about mrproper in start.rst&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-5-tales.aparecida@gmail.com/">Documentation: KUnit: Reword start guide for selecting tests&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-6-tales.aparecida@gmail.com/">Documentation: KUnit: add intro to the getting-started page&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-7-tales.aparecida@gmail.com/">Documentation: KUnit: update links in the index page&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-8-tales.aparecida@gmail.com/">lib: overflow: update reference to kunit-tool&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220822022646.98581-9-tales.aparecida@gmail.com/">lib: stackinit: update reference to kunit-tool&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/linux-kselftest/20220819020815.183766-1-tales.aparecida@gmail.com/">kunit: tool: fix &amp;ndash;qemu_config help text&lt;/a>&lt;/td>
+&lt;td>Under review&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;ul>
+&lt;li>I started and intend to keep exploring a thread about &lt;a href="https://lore.kernel.org/linux-kselftest/443632b6-c589-ef62-2385-3e8406680343@gmail.com/">&amp;ldquo;running kunit tests on platform devices&amp;rdquo;&lt;/a>. I believe there&amp;rsquo;s a workaround using one of the approaches we learned while writing tests for AMDGPU.&lt;/li>
+&lt;/ul>
+&lt;h2 id="linux-kernel---drm">
+Linux Kernel - DRM
+&lt;a class="heading-link" href="#linux-kernel---drm">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>The Direct Rendering Manager (DRM) is a subsystem of the Linux kernel
+responsible for interfacing with GPUs. There&amp;rsquo;s still a lot to learn and contribute
+to this subsystem, and I hope to discuss about introducing unit tests to other
+folders during the Linux Plumbers Conference (more about that in a following section).
+I only have two patches to VKMS to show, sent shortly before the community bounding period.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Patch&lt;/th>
+&lt;th>Status&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/dri-devel/20220415111300.61013-2-tales.aparecida@gmail.com/">drm/vkms: check plane_composer-&amp;gt;map[0] before using it&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/dri-devel/20220415111300.61013-3-tales.aparecida@gmail.com/">drm/vkms: return early if compose_plane fails&lt;/a>&lt;/td>
+&lt;td>Discarded&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;ul>
+&lt;li>Tested: &lt;a href="https://lore.kernel.org/dri-devel/CAGVoLp47kQTuMJWVGtY-KMPf=opv3ted7MkbooEbdb2UWZqevg@mail.gmail.com/">KUnit tests for RGB565 conversion&lt;/a>. Following this thread I&amp;rsquo;ve learned how to run kunit tests for other architectures, like PowerPC.&lt;/li>
+&lt;/ul>
+&lt;h2 id="linux-kernel---amdgpu">
+Linux Kernel - AMDGPU
+&lt;a class="heading-link" href="#linux-kernel---amdgpu">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h2>
+&lt;p>Inside the DRM subsystem resides the AMD folder, where you can find drivers for many generations of AMD GPUs.
+Besides our main patch series, I&amp;rsquo;ve sent some minor patches and reviewed others.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Patch&lt;/th>
+&lt;th>Status&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/amd-gfx/20220415182014.278652-1-tales.aparecida@gmail.com/">drm/amd/display: make hubp1_wait_pipe_read_start() static&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/amd-gfx/20220415195027.305019-1-tales.aparecida@gmail.com/">Update AMDGPU glossary and MAINTAINERS&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/amd-gfx/20220811204327.411709-2-tales.aparecida@gmail.com/#t">drm/amd/display: fix overflow on MIN_I64 definition&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/amd-gfx/20220811204327.411709-3-tales.aparecida@gmail.com/">drm/amd/display: fix minor codestyle problems&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://lore.kernel.org/amd-gfx/20220821062528.13416-1-tales.aparecida@gmail.com/">drm/amd/display: remove unneeded defines from bios parser&lt;/a>&lt;/td>
+&lt;td>Accepted&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;ul>
+&lt;li>Reviewed &lt;a href="https://lore.kernel.org/amd-gfx/20220716222529.421115-1-mwen@igalia.com/">Documentation/amdgpu/display: describe color and blend mode properties mapping&lt;/a>&lt;/li>
+&lt;li>Reviewed &lt;a href="https://lore.kernel.org/amd-gfx/20220812031911.62729-1-jiapeng.chong@linux.alibaba.com/">drm/amd/display: remove unreachable code&lt;/a>&lt;/li>
+&lt;li>Asked for a cherry-pick of two commits from &lt;a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/">torvalds/master&lt;/a> to &lt;a href="https://lore.kernel.org/amd-gfx/20220714024748.29696-1-tales.aparecida@gmail.com/">fix compilation errors on GCC12&lt;/a>. The message didn&amp;rsquo;t receive any replies, but soon after the branch got rebased, fixing the problem.&lt;/li>
+&lt;/ul>
+&lt;h1 id="acknowledgment">
+Acknowledgment
+&lt;a class="heading-link" href="#acknowledgment">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>First, I would like to thank the X.org Foundation for accepting my GSoC proposal,
+for what I&amp;rsquo;ll be eternally grateful.&lt;/p>
+&lt;p>Next, thanks to AMD for donating the RX580 GPU which powered my testing system,
+and alongside Igalia allowed my mentors to take part in the GSoC program.&lt;/p>
+&lt;p>Moreover I would like to thank The Linux Foundation, which will enable my trip
+to Dublin, to attend the Linux Plumbers Conference.&lt;/p>
+&lt;p>There were plenty of great interactions with the DRM community, AMD, and KUnit engineers,
+for which I&amp;rsquo;m very thankful, specially David Gow which promptly reviewed most of my team&amp;rsquo;s patches.&lt;/p>
+&lt;p>And finally, thanks for my mentors and the other mentees with whom I&amp;rsquo;ve worked closely this summer,
+any of this would be possible without their support.&lt;/p>
+&lt;p>&lt;strong>Mentors:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://andrealmeid.com/">André &amp;ldquo;Tony&amp;rdquo; Almeida&lt;/a> (Igalia)&lt;/li>
+&lt;li>&lt;a href="https://melissawen.github.io/">Melissa Wen&lt;/a> (Igalia)&lt;/li>
+&lt;li>&lt;a href="https://siqueira.tech/">Rodrigo Siqueira&lt;/a> (AMD)&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Mentees:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://crosscat.me">Isabella Basso&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://mairacanal.github.io">Maíra Canal&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://magalilemes.github.io/">Magali Lemes&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="next-steps">
+Next steps
+&lt;a class="heading-link" href="#next-steps">
+&lt;i class="fa fa-link" aria-hidden="true">&lt;/i>
+&lt;/a>
+&lt;/h1>
+&lt;p>Of course this is not farewell! It&amp;rsquo;s more like reaching the end of a game&amp;rsquo;s tutorial.&lt;/p>
+&lt;p>My first step, thanks to The Linux Foundation and my mentors, will be attending
+in-person the Kernel Testing &amp;amp; Dependability Micro Conference at the
+Linux Plumber Conference, where I hope to show what we&amp;rsquo;ve achieved and to discuss
+about the best way to organize the tests, which is what I&amp;rsquo;ve invested most of
+my time, so please keep an eye out for my report about it in my personal blog
+in the following weeks.&lt;/p>
+&lt;p>In regards to coding, beyond following through with my patches under review,
+I intend to write the tests for the DCE functions I proposed initially and
+maybe extend to other generations, now that we realized that the physical
+device is not needed in order to write unit tests. I might even look for other
+modules which would benefit from unit tests, like VKMS.&lt;/p>
+&lt;p>Finally, I&amp;rsquo;ll also try to get involved with the &lt;a href="https://github.com/kernelci/kernelci-core/">KernelCI&lt;/a> project,
+where I could even employ my web development experience. In order to do that I&amp;rsquo;ll be
+attending virtually the monthly &lt;a href="https://elinux.org/Automated_Testing#Conference_call">Automated Testing Call&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;p>Thanks for reading.&lt;/p></description></item><item><title>Reviewing patches</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</link><pubDate>Mon, 27 Jun 2022 12:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/dri-devel/gsoc-report-4/</guid><description>&lt;p>Being part of the community, is more than just writing code and sending patches, it is also keeping track of the IRC discussions and reading the mailing lists to &lt;strong>review&lt;/strong> and &lt;strong>test&lt;/strong> patches sent from others whenever you can.&lt;/p>
 &lt;p>Both environments are not the most welcoming, but there are plenty of tools from the &lt;em>community&lt;/em> to help parsing them. In this post I&amp;rsquo;ll talk about &lt;a href="https://github.com/mricon/b4">b4&lt;/a>, suggested by my GSOC mentor &lt;a href="http://andrealmeid.com/">André&lt;/a>, a tool to help with applying patches.&lt;/p>
 &lt;!-- raw HTML omitted -->
 &lt;h1 id="applying-patches">
