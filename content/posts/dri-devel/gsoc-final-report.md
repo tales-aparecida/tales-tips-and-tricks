@@ -6,7 +6,6 @@ draft = false
 authors = ["Tales L. Aparecida"]
 categories = ["DRI-Devel"]
 tags = ['gsoc', 'kernel']
-featuredImage = "/tales-tips-and-tricks/images/applying-patch-to-belly.jpg"
 +++
 
 So here we have it, the end of my Google Summer of Code journey.
