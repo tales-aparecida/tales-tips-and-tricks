@@ -11,7 +11,7 @@ featuredImage = "/tales-tips-and-tricks/images/party-penguin.jpg"
 
 So it begins!
 
-With some pushes and pulls from friends, I've been studying the Linux Graphical stack for some time now. After some minor patches to both [Mesa](https://gitlab.freedesktop.org/mesa/mesa) and the [Linux Kernel](https://lore.kernel.org/all/?q=tales.aparecida@gmail.com), I followed the [instructions](https://summerofcode.withgoogle.com/programs/2022/organizations/xorg-foundation) thoroughly and landed a successful [Google Summer of Code proposal](https://summerofcode.withgoogle.com/proposals/details/TKAqZe03):
+With some pushes and pulls from friends, I've been studying the Linux Graphical stack for some time now. After some minor patches to both [Mesa](https://gitlab.freedesktop.org/mesa/mesa) and the [Linux Kernel](https://lore.kernel.org/all/?q=tales.aparecida@gmail.com), I followed the [instructions](https://summerofcode.withgoogle.com/programs/2022/organizations/xorg-foundation) thoroughly and landed a successful [Google Summer of Code proposal](https://summerofcode.withgoogle.com/programs/2022/projects/JYeBJNnX):
 
 # Introduce Unit Tests to the AMDGPU “DCE” Component
 
