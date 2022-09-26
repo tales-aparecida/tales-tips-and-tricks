@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Journal on Tales Tips and Tricks</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/categories/journal/</link><description>Recent content in Journal on Tales Tips and Tricks</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 25 Sep 2022 18:00:00 -0300</lastBuildDate><atom:link href="https://tales-aparecida.github.io/tales-tips-and-tricks/categories/journal/index.xml" rel="self" type="application/rss+xml"/><item><title>#TalesTail 2022-09-25 | KUnit in production?</title><link>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/journaling/2022-09-25-kunit-in-production/</link><pubDate>Sun, 25 Sep 2022 18:00:00 -0300</pubDate><guid>https://tales-aparecida.github.io/tales-tips-and-tricks/posts/journaling/2022-09-25-kunit-in-production/</guid><description>&lt;p>One of the things we&amp;rsquo;ve talked at the Linux Plumbers Conference was how there are
+people interested in compiling the Kernel with KUnit enabled. This discussion is
+solidified by Joe Fradley&amp;rsquo;s Aug 17th patch:&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a href="https://groups.google.com/g/kunit-dev/c/DUC8-7EooHo">[PATCH 0/2] kunit: add boot time parameter to enable KUnit&lt;/a>&lt;/p>
+&lt;p>There are some use cases where the kernel binary is desired to be the same
+for both production and testing. This poses a problem for users of KUnit
+as built-in tests will automatically run at startup and test modules
+can still be loaded leaving the kernel in an unsafe state. There is a
+&amp;ldquo;test&amp;rdquo; taint flag that gets set if a test runs but nothing to prevent
+the execution.&lt;/p>
+&lt;p>This patch adds the kunit.enable module parameter that will need to be
+set to true in addition to KUNIT being enabled for KUnit tests to run.
+The default value is true giving backwards compatibility. However, for
+the production+testing use case the new config option
+KUNIT_ENABLE_DEFAULT_DISABLED can be enabled to default kunit.enable to
+false requiring the tester to opt-in by passing kunit.enable=1 to
+the kernel.&lt;/p>
+&lt;/blockquote>
+&lt;p>Knowing that there are people using KUnit in their workflow sparks joy,
+but I believe these new use cases should be treated with care.
+There might be some test suites that were not written taking production into consideration,
+that is, they might have been written with the assumption that tests wouldn&amp;rsquo;t be compiled out of a controlled environment.&lt;/p>
+&lt;p>Guess I&amp;rsquo;ll have a look around in those test files. 🔎&lt;/p>
+&lt;p>There&amp;rsquo;s at least one thing that we should watch out for, that is
+&lt;a href="https://docs.kernel.org/dev-tools/kunit/usage.html#testing-static-functions">testing static functions&lt;/a>,
+which injects the test cases into the same compilation unit when the tests are compiled.
+Apparently there will be some activity in that front, but for now we wait&amp;hellip;
+and by that I&amp;rsquo;m referring to that series
+&lt;a href="https://lore.kernel.org/amd-gfx/20220912155919.39877-1-mairacanal@riseup.net/">adding unit tests into the AMDGPU driver&lt;/a>,
+which will be delayed until we understand better this Kunit-in-production use cases.&lt;/p>
+&lt;hr>
+&lt;p>&amp;ldquo;Tales Tail&amp;rdquo; is a personal journal where I try to talk about my latest work in progress.
+Today I was trying to understand why people want KUnit in production Kernel.&lt;/p></description></item></channel></rss>
