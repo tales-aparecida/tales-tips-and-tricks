@@ -86,6 +86,10 @@ disableComments = true
   weight = 1
   url  = "posts/dri-devel"
 [[menu.main]]
+  name = "Journaling"
+  weight = 1
+  url  = "posts/journaling"
+[[menu.main]]
   name = "Other topics"
   weight = 1
   url  = "posts/"
